@@ -17,6 +17,9 @@ const showingNavigationDropdown = ref(false);
             >
                 <div class="flex flex-1 gap-5">
                     <div class="w-[120px]">
+                        <a href="#" class="main-button"> Dashboard </a>
+                    </div>
+                    <div class="w-[120px]">
                         <a href="#" class="main-button"> Immobili </a>
                     </div>
                     <div class="w-[120px]">

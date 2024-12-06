@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('gallery_images', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('estate_id');
+            $table->foreign('estate_id')->references('id')->on('estates')->cascadeOnDelete();
+            $table->string('path');
             $table->timestamps();
         });
     }

@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('purchase_proposals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estate_id');
-            $table->foreign('estate_id')->references('id')->on('estates')->cascadeOnDelete();
-            $table->string('path');
+            $table->float('price_from');
+            $table->float('price_to');
+            
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('purchase_proposals');
     }
 };
