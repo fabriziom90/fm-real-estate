@@ -17,11 +17,18 @@ export default {
                 sans: ['"Roboto Condensed"', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                'main-blue': '#011A90',
+                "main-blue": "#011A90",
+                "warning": "#ffd900",
+                "danger": "#da0000",
+                'white': "#fff"
+            },
+            borders: {
+                "border-button": "6px solid"
             }
         },
     },
 
-    plugins: [forms],
+    plugins: [forms, require('daisyui')],
+    daisyui: {themes:false, themeRoot: 'false'}
 };
 

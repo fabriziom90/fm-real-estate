@@ -17,7 +17,7 @@ import { Link } from "@inertiajs/vue3";
                     <div class="w-[120px]">
                         <a
                             :href="route('dashboard')"
-                            class="main-button"
+                            class="main-button bg-white border-white text-main-blue"
                             :class="
                                 route().current() === 'dashboard'
                                     ? 'active'
@@ -30,7 +30,7 @@ import { Link } from "@inertiajs/vue3";
                     <div class="w-[120px]">
                         <a
                             :href="route('admin.immobili.index')"
-                            class="main-button"
+                            class="main-button bg-white border-white text-main-blue"
                             :class="
                                 route().current() === 'admin.immobili.index'
                                     ? 'active'
@@ -41,12 +41,17 @@ import { Link } from "@inertiajs/vue3";
                         </a>
                     </div>
                     <div class="w-[120px]">
-                        <a href="#" class="main-button"> Clienti </a>
+                        <a
+                            href="#"
+                            class="main-button bg-white border-white text-main-blue"
+                        >
+                            Clienti
+                        </a>
                     </div>
                     <div class="w-[120px]">
                         <a
                             :href="route('admin.areas.index')"
-                            class="main-button"
+                            class="main-button bg-white border-white text-main-blue"
                             :class="
                                 route().current() === 'admin.areas.index'
                                     ? 'active'

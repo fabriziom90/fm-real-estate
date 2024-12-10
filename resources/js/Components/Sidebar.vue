@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import { router } from "@inertiajs/vue3";
+
+const logout = () => {
+    router.post("/logout");
+};
+</script>
 <template lang="">
     <div class="sidenav">
         <ul class="list-none">
@@ -20,8 +26,8 @@
             <li
                 class="my-3 py-3 ps-2 border-s-4 border-white hover:border-s-4 hover:border-main-blue"
             >
-                <a
-                    :href="route('logout')"
+                <button
+                    @click="logout()"
                     class="hover:text-main-blue"
                     method="post"
                     as="button"
@@ -33,13 +39,13 @@
                             ></i>
                             <span> Logout </span>
                         </span>
-                        <span class="hidden-hover">
+                        <span class="hidden-hover ms-10">
                             <i
                                 class="fas fa-solid fa-arrow-right-from-bracket"
                             ></i>
                         </span>
                     </div>
-                </a>
+                </button>
             </li>
         </ul>
     </div>
