@@ -7,15 +7,24 @@
 @layer components {
     .main-button {
         background-color: #fff;
-        padding: 20px 30px;
+        padding: 20px 10px;
         color: #011a90;
         display: inline-block;
         width: 100%;
         text-align: center;
         transition: 0.3s linear all;
+        border: 6px solid #fff;
+    }
+
+    .main-button.active {
+        -webkit-box-shadow: inset 0px 0px 0px 5px #011a90;
+        box-shadow: inset 0px 0px 0px 5px #011a90;
     }
 
     .main-button:hover {
         background-color: #b9b9b9;
+        border: 6px solid #b9b9b9;
     }
+
+    
 }

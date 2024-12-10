@@ -6,6 +6,8 @@ use App\Models\Estate;
 use App\Http\Requests\StoreEstateRequest;
 use App\Http\Requests\UpdateEstateRequest;
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class EstateController extends Controller
 {
@@ -14,7 +16,9 @@ class EstateController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('estates/Index', [
+            'message' => 'Messaggio pagina'
+        ]);
     }
 
     /**

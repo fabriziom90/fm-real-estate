@@ -6,6 +6,8 @@ use App\Models\Area;
 use App\Http\Requests\StoreAreaRequest;
 use App\Http\Requests\UpdateAreaRequest;
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class AreaController extends Controller
 {
@@ -13,8 +15,12 @@ class AreaController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        //
+    {   
+        $areas = Area::all();
+        
+        return Inertia::render('areas/Index', [
+            'areas' => $areas
+        ]);
     }
 
     /**

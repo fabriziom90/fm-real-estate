@@ -46,7 +46,7 @@
 </template>
 <style lang="css">
 .sidenav {
-    width: 10%;
+    width: 175px;
     background-color: #fff;
     position: fixed;
     padding: 20px;

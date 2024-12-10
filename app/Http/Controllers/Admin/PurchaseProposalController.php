@@ -13,7 +13,7 @@ class PurchaseProposalController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

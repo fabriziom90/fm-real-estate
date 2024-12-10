@@ -3,8 +3,6 @@ import { ref } from "vue";
 
 import Sidebar from "@/Components/Sidebar.vue";
 import { Link } from "@inertiajs/vue3";
-
-const showingNavigationDropdown = ref(false);
 </script>
 
 <template>
@@ -17,19 +15,52 @@ const showingNavigationDropdown = ref(false);
             >
                 <div class="flex flex-1 gap-5">
                     <div class="w-[120px]">
-                        <a href="#" class="main-button"> Dashboard </a>
+                        <a
+                            :href="route('dashboard')"
+                            class="main-button"
+                            :class="
+                                route().current() === 'dashboard'
+                                    ? 'active'
+                                    : ''
+                            "
+                        >
+                            Dashboard
+                        </a>
                     </div>
                     <div class="w-[120px]">
-                        <a href="#" class="main-button"> Immobili </a>
+                        <a
+                            :href="route('admin.immobili.index')"
+                            class="main-button"
+                            :class="
+                                route().current() === 'admin.immobili.index'
+                                    ? 'active'
+                                    : ''
+                            "
+                        >
+                            Immobili
+                        </a>
                     </div>
                     <div class="w-[120px]">
                         <a href="#" class="main-button"> Clienti </a>
+                    </div>
+                    <div class="w-[120px]">
+                        <a
+                            :href="route('admin.areas.index')"
+                            class="main-button"
+                            :class="
+                                route().current() === 'admin.areas.index'
+                                    ? 'active'
+                                    : ''
+                            "
+                        >
+                            Aree
+                        </a>
                     </div>
                 </div>
             </div>
             <main>
                 <div
-                    class="w-[100%] md:w-[768px] lg:w-[990px] xl:w-[1250px] mx-auto bg-white mt-5"
+                    class="w-[100%] md:w-[768px] lg:w-[990px] xl:w-[1250px] mx-auto p-8 bg-white mt-5"
                 >
                     <slot />
                 </div>
