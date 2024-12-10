@@ -32,7 +32,7 @@ import { Link } from "@inertiajs/vue3";
                             :href="route('admin.immobili.index')"
                             class="main-button bg-white border-white text-main-blue"
                             :class="
-                                route().current() === 'admin.immobili.index'
+                                route().current('admin.immobili.*')
                                     ? 'active'
                                     : ''
                             "
@@ -53,9 +53,7 @@ import { Link } from "@inertiajs/vue3";
                             :href="route('admin.areas.index')"
                             class="main-button bg-white border-white text-main-blue"
                             :class="
-                                route().current() === 'admin.areas.index'
-                                    ? 'active'
-                                    : ''
+                                route().current('admin.areas.*') ? 'active' : ''
                             "
                         >
                             Aree

@@ -28,7 +28,7 @@ class AreaController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('areas/Create');
     }
 
     /**
@@ -36,7 +36,14 @@ class AreaController extends Controller
      */
     public function store(StoreAreaRequest $request)
     {
-        //
+        
+        $form_data = $request->validated();
+        $area = new Area();
+        $area->fill($form_data);
+
+        // $area->save();
+
+        return redirect()->route('admin.areas.index')->with('message', 'Area inserita correttamente');
     }
 
     /**

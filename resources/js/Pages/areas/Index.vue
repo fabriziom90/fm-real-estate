@@ -1,8 +1,10 @@
 <script setup>
+import { onMounted } from "vue";
 import AuthenticatedLayout from "../../Layouts/AuthenticatedLayout.vue";
 
 defineProps({
     areas: Array,
+    message: String,
 });
 </script>
 
@@ -11,7 +13,7 @@ defineProps({
         <div class="flex justify-between items-center">
             <h2 class="text-3xl mb-10">Elenco aree</h2>
             <a
-                href="#"
+                :href="route('admin.areas.create')"
                 class="tool-button bg-main-blue border-main-blue text-white"
             >
                 Aggiungi area
@@ -52,7 +54,6 @@ defineProps({
                         </td>
                     </tr>
                 </tbody>
-                <li v-for="area in areas">{{ area.area }}</li>
             </table>
         </div>
     </AuthenticatedLayout>
