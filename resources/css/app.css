@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 @layer components {
-    .main-button { 
+    .main-button {
         padding: 20px 10px;
         display: inline-block;
         width: 100%;
@@ -13,7 +13,7 @@
         transition: 0.3s linear all;
         border: 6px solid;
     }
-    
+
     .main-button.active {
         -webkit-box-shadow: inset 0px 0px 0px 5px #011a90;
         box-shadow: inset 0px 0px 0px 5px #011a90;
@@ -23,7 +23,7 @@
         opacity: 0.9;
     }
 
-    .tool-button{
+    .tool-button {
         padding: 5px 10px;
         display: inline-block;
         text-align: center;
@@ -33,16 +33,15 @@
     }
 
     .tool-button:hover {
-        opacity: 0.60;
+        opacity: 0.6;
     }
 }
 
-th{
+th {
     font-size: 20px;
     text-align: center;
 }
 
-td{
+td {
     text-align: center;
 }
-

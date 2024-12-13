@@ -13,7 +13,7 @@ class AreaSeeder extends Seeder
      */
     public function run(): void
     {
-        $areas = ['Z001','Z002','Z003','Z004','Z005','Z006','Z007','Z008','Z009','Z010'];
+        $areas = ['Z012','Z013','Z014','Z015','Z016','Z017','Z018','Z019','Z020','Z021'];
         foreach($areas as $area){
             $new_area = new Area();
             $new_area->area = $area;

@@ -32,6 +32,17 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {   
+        return [
+            'email.required' => 'Devi inserire l\'indirizzo email',
+            'email.string'   => 'Devi inserire un valore corretto',
+            'email.email'    => 'Devi inserire un indirizzo email valido',
+            'password.required' => 'Devi inserire la password',
+            'password.string'  => 'Devi inserire un valore corretto'
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *

@@ -18,12 +18,12 @@ defineProps({
                 <img class="w-10 me-3" src="/mylogo.png" alt="FM Real Estate" />
                 <span>Fm Real Estate</span>
             </div>
-            <a v-if="$page.props.auth.user" :href="route('dashboard')">
+
+            <!-- <a v-if="$page.props.auth.user != null" :href="route('dashboard')">
                 Dashboard
-            </a>
-            <template v-else>
-                <a :href="route('login')" class="me-4">Login </a>
-            </template>
+            </a> -->
+
+            <a :href="route('login')" class="me-4">Login </a>
         </nav>
     </header>
 </template>
