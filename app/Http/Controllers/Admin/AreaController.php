@@ -16,7 +16,7 @@ class AreaController extends Controller
      */
     public function index()
     {   
-        $areas = Area::all();
+        $areas = Area::all('id', 'area');
         
         return Inertia::render('areas/Index', [
             'areas' => $areas

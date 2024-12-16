@@ -3,8 +3,14 @@ import { ref, computed, onMounted } from "vue";
 import { usePage } from "@inertiajs/vue3";
 
 const props = defineProps({
-    totalRecords: Number,
-    perPageOptions: Array,
+    totalRecords: {
+        type: Number,
+        required: true,
+    },
+    perPageOptions: {
+        type: Array,
+        required: true,
+    },
 });
 
 const emit = defineEmits(["input"]);
@@ -19,7 +25,7 @@ const pages = computed(() => {
     if (cur_page > 0) {
         return Math.ceil(props.totalRecords / perPage.value);
     } else {
-        return props.totalRecors / perPage.value;
+        return props.totalRecords / perPage.value;
     }
 });
 
