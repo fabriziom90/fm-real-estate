@@ -31,7 +31,7 @@ onMounted(() => {
             </a>
         </div>
 
-        <Table :rows="areas" :columns="columns" />
+        <Table :rows="areas" :columns="columns" :data="'areas'" />
     </AuthenticatedLayout>
 </template>
 <style lang=""></style>

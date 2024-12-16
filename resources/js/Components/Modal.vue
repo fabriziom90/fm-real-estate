@@ -1,22 +1,12 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 const props = defineProps({
-    show: {
-        type: Boolean,
-        default: false,
-    },
-    maxWidth: {
-        type: String,
-        default: '2xl',
-    },
-    closeable: {
-        type: Boolean,
-        default: true,
-    },
+    show: Boolean,
+    id: Number,
 });
 
-const emit = defineEmits(['close']);
+const emit = defineEmits(["close", "confirmDelete"]);
 const dialog = ref();
 const showSlot = ref(props.show);
 
@@ -24,54 +14,23 @@ watch(
     () => props.show,
     () => {
         if (props.show) {
-            document.body.style.overflow = 'hidden';
-            showSlot.value = true;
+            document.body.style.overflow = "hidden";
 
             dialog.value?.showModal();
         } else {
-            document.body.style.overflow = '';
+            document.body.style.overflow = "";
 
             setTimeout(() => {
                 dialog.value?.close();
                 showSlot.value = false;
             }, 200);
         }
-    },
+    }
 );
 
 const close = () => {
-    if (props.closeable) {
-        emit('close');
-    }
+    emit("close");
 };
-
-const closeOnEscape = (e) => {
-    if (e.key === 'Escape') {
-        e.preventDefault();
-
-        if (props.show) {
-            close();
-        }
-    }
-};
-
-onMounted(() => document.addEventListener('keydown', closeOnEscape));
-
-onUnmounted(() => {
-    document.removeEventListener('keydown', closeOnEscape);
-
-    document.body.style.overflow = '';
-});
-
-const maxWidthClass = computed(() => {
-    return {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
-        lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
-    }[props.maxWidth];
-});
 </script>
 
 <template>
@@ -96,9 +55,7 @@ const maxWidthClass = computed(() => {
                     class="fixed inset-0 transform transition-all"
                     @click="close"
                 >
-                    <div
-                        class="absolute inset-0 bg-gray-500 opacity-75"
-                    />
+                    <div class="absolute inset-0 bg-gray-500 opacity-75" />
                 </div>
             </Transition>
 
@@ -112,10 +69,28 @@ const maxWidthClass = computed(() => {
             >
                 <div
                     v-show="show"
-                    class="mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full"
-                    :class="maxWidthClass"
+                    class="p-5 fixed top-20 left-1/4 transform overflow-hidden bg-white shadow-xl transition-all sm:w-[90%] sm:mx-auto md:w-[900px] md:mx-auto"
                 >
-                    <slot v-if="showSlot" />
+                    <h2 class="text-2xl border-b pb-5">
+                        Conferma cancellazione
+                    </h2>
+                    <div class="py-10">
+                        Sei sicuro di voler cancellare questo elemento?
+                    </div>
+                    <div class="border-t pt-5">
+                        <button
+                            class="tool-button text-white bg-danger border-danger"
+                            @click="emit('confirmDelete')"
+                        >
+                            Cancella
+                        </button>
+                        <button
+                            class="tool-button text-white bg-gray-500 border-gray-500"
+                            @click="close()"
+                        >
+                            Chiudi
+                        </button>
+                    </div>
                 </div>
             </Transition>
         </div>

@@ -29,6 +29,6 @@ export default {
     },
 
     plugins: [forms, require('daisyui')],
-    daisyui: {themes:false, themeRoot: 'false'}
+    daisyui: {themes:['light'], themeRoot: ':root'}
 };
 

@@ -51,7 +51,7 @@ class AreaController extends Controller
      */
     public function show(Area $area)
     {
-        //
+        return Inertia::render('areas/Show', ['area' => $area]);
     }
 
     /**
@@ -78,6 +78,7 @@ class AreaController extends Controller
      */
     public function destroy(Area $area)
     {
-        //
+        $area->delete();
+        return redirect()->route('admin.areas.index')->with('message', 'Area cancellata correttamente');
     }
 }
