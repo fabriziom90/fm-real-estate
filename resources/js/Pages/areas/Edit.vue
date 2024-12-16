@@ -4,24 +4,22 @@ import { ref } from "vue";
 import axios from "axios";
 
 import AuthenticatedLayout from "../../Layouts/AuthenticatedLayout.vue";
-import TextInput from "../../Components/TextInput.vue";
+
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toast-notification";
 
-defineProps({ errors: Object });
-
-let area = ref("");
+const props = defineProps({ area: Object, errors: Object });
 
 const $toast = useToast();
 
 const form = useForm({
-    area: "",
+    area: props.area.area,
 });
 
 const store = () => {
-    form.post(route("admin.areas.store"), {
+    form.put(route("admin.areas.update", { area: props.area.id }), {
         onSuccess: (resp) => {
-            $toast.success("Area creata", {
+            $toast.success("Area aggiornata correttamente", {
                 position: "top-right",
                 duration: 3000,
             });
@@ -40,8 +38,8 @@ const store = () => {
 </script>
 <template lang="">
     <AuthenticatedLayout>
-        <div class="flex justify-between items-center">
-            <h2 class="text-3xl mb-10">Aggiungi Area</h2>
+        <div class="flex justify-between items-center mb-5">
+            <h2 class="text-3xl mb-10">Modifica area</h2>
             <a
                 :href="route('admin.areas.index')"
                 class="tool-button bg-main-blue border-main-blue text-white"

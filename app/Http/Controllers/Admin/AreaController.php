@@ -41,7 +41,7 @@ class AreaController extends Controller
         $area = new Area();
         $area->fill($form_data);
 
-        // $area->save();
+        $area->save();
 
         return redirect()->route('admin.areas.index')->with('message', 'Area inserita correttamente');
     }
@@ -58,16 +58,19 @@ class AreaController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Area $area)
-    {
-        //
+    {   
+        return Inertia::render('areas/Edit', ['area' => $area]);
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateAreaRequest $request, Area $area)
-    {
-        //
+    {   
+        $form_data = $request->validated();
+        $area->update($form_data);
+
+        return redirect()->route('admin.areas.index')->with('message', 'Area aggiornata correttamente');
     }
 
     /**

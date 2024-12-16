@@ -11,7 +11,7 @@ class UpdateAreaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateAreaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'area' => ['required', 'max:255'],
+        ];
+    }
+
+    public function messages(){
+        return [
+            'area.required' => 'Devi inserire il nome dell\'area',
+            'area.max'      => 'Il nome dell\'area deve essere di al massimo :max caratteri'
         ];
     }
 }

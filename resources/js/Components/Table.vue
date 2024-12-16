@@ -74,16 +74,16 @@ const changePage = (elem) => {
             </thead>
             <tbody>
                 <tr v-for="row in filteredRows">
-                    <td v-for="prop in row">{{ prop }}</td>
+                    <td v-for="(property, key) in row">{{ property }}</td>
                     <td>
                         <a
-                            href="#"
+                            :href="`/admin/areas/${row.id}/show`"
                             class="tool-button text-white bg-main-blue border-main-blue"
                         >
                             <i class="fas fa-eye"></i>
                         </a>
                         <a
-                            href="#"
+                            :href="`/admin/areas/${row.id}/edit`"
                             class="tool-button text-white bg-warning border-warning"
                         >
                             <i class="fas fa-edit"></i>
