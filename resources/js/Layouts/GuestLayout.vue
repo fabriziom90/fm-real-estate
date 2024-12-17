@@ -24,6 +24,8 @@ defineProps({
 main {
     height: calc(100% - 60px);
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 </style>

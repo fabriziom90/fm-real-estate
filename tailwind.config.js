@@ -28,7 +28,7 @@ export default {
         },
     },
 
-    plugins: [forms, require('daisyui')],
-    daisyui: {themes:['light'], themeRoot: ':root'}
+    plugins: [forms],
+    // daisyui: {themes:['light'], themeRoot: ':root'}
 };
 

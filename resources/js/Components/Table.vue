@@ -115,15 +115,20 @@ const closeModal = () => {
             placeholder="Cerca"
         />
 
-        <table class="table table-zebra">
+        <table class="w-full table-auto">
             <thead>
                 <tr>
                     <th v-for="column in columns">{{ column }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="row in filteredRows">
-                    <td v-for="(property, key) in row">{{ property }}</td>
+                <tr
+                    class="odd:bg-white even:bg-gray-200 border-b"
+                    v-for="row in filteredRows"
+                >
+                    <td class="py-5" v-for="(property, key) in row">
+                        {{ property }}
+                    </td>
                     <td>
                         <a
                             :href="`/admin/${data}/${row.id}`"
