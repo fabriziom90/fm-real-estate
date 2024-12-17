@@ -6,6 +6,8 @@ use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class CustomerController extends Controller
 {
@@ -14,7 +16,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::all('id', 'name', 'surname', 'email', 'phone', 'address');
+
+        return Inertia::render('customers/Index', ['customers' => $customers]);
     }
 
     /**

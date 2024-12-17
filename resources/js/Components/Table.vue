@@ -107,7 +107,7 @@ const closeModal = () => {
 </script>
 <template lang="">
     <div class="overflow-x-auto min-h-[500px]">
-        Cerca: {{ data }}
+        Cerca:
         <input
             type="text"
             class="input-sm rounded my-3 ms-1 border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"

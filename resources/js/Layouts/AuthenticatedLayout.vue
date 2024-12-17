@@ -42,8 +42,13 @@ import { Link } from "@inertiajs/vue3";
                     </div>
                     <div class="w-[120px]">
                         <a
-                            href="#"
+                            :href="route('admin.customers.index')"
                             class="main-button bg-white border-white text-main-blue"
+                            :class="
+                                route().current('admin.customers.*')
+                                    ? 'active'
+                                    : ''
+                            "
                         >
                             Clienti
                         </a>

@@ -27,3 +27,9 @@ defineProps({
         </nav>
     </header>
 </template>
+
+<style>
+header {
+    height: 60px;
+}
+</style>

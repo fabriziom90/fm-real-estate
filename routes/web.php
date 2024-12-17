@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Admin\EstateController;
 use App\Http\Controllers\Admin\AreaController;
+use App\Http\Controllers\Admin\CustomerController;
 
 Route::get('/', function () {
     return Inertia::render('Homepage', [
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function(){
     Route::resource('/immobili', EstateController::class);
+    Route::resource('/customers', CustomerController::class);
     Route::resource('/areas', AreaController::class);
 });
 

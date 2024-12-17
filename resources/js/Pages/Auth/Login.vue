@@ -33,9 +33,9 @@ const submit = () => {
 
 <template>
     <GuestLayout :canLogin="canLogin" :canRegister="canRegister">
-        <div class="w-1/2 bg-white mt-5 p-5 mx-auto">
-            <div v-if="status" class="mb-4 text-sm font-medium text-green-600">
-                {{ status }}
+        <div class="w-1/2 bg-white p-5 mx-auto">
+            <div class="mb-5">
+                <h2 class="text-2xl">Effettua l'accesso ad FM-Real-Estate</h2>
             </div>
 
             <form @submit.prevent="submit">

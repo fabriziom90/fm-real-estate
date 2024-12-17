@@ -4,6 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base{
+    body{
+        height: 100vh;
+    }
+
+    body > div{
+        height: 100%;
+    }
+}
+
 @layer components {
     .main-button {
         padding: 20px 10px;

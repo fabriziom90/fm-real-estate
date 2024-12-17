@@ -19,3 +19,11 @@ defineProps({
         <slot />
     </main>
 </template>
+
+<style>
+main {
+    height: calc(100% - 60px);
+    display: flex;
+    align-items: center;
+}
+</style>
