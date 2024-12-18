@@ -18,7 +18,7 @@ const form = useForm({
 });
 
 const store = () => {
-    form.post(route("admin.areas.update"), {
+    form.post(route("admin.areas.store"), {
         onSuccess: (resp) => {
             $toast.success("Area creata", {
                 position: "top-right",
@@ -56,7 +56,7 @@ const store = () => {
                         <input
                             type="text"
                             placeholder="Nome area"
-                            class="input-sm rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                            class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                             v-model="form.area"
                         />
                         <div v-if="form.errors.area" class="text-danger">
