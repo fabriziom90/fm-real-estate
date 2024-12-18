@@ -14,6 +14,9 @@ const props = defineProps({
 });
 
 let search = ref("");
+const deletedMessage = ref("");
+const confirmationMessage = ref("");
+const deleteObj = ref({});
 const show = ref(false);
 const deleteId = ref(0);
 let pagination = ref({ page: 1, perPage: perPageOptions[0] });
@@ -70,35 +73,42 @@ const changePage = (elem) => {
 
 const deleteElem = () => {
     show.value = false;
-    form.delete(
-        route(`admin.${props.data}.destroy`, { area: deleteId.value }),
-        {
-            onSuccess: (resp) => {
-                $toast.success("Area creata", {
-                    position: "top-right",
-                    duration: 3000,
-                });
+    form.delete(route(`admin.${props.data}.destroy`, deleteObj.value), {
+        onSuccess: (resp) => {
+            $toast.success("Cancellazione completata", {
+                position: "top-right",
+                duration: 3000,
+            });
 
-                setTimeout(() => {
-                    location.reload();
-                }, 3100);
-            },
-            onError: (resp) => {
-                $toast.error(
-                    "Inserimento non completato. Verifica i campi della form.",
-                    {
-                        position: "top-right",
-                        duration: 3000,
-                    }
-                );
-            },
-        }
-    );
+            setTimeout(() => {
+                location.reload();
+            }, 3100);
+        },
+        onError: (resp) => {
+            $toast.error("Cancellazione non completata. Riprova più tardi.", {
+                position: "top-right",
+                duration: 3000,
+            });
+        },
+    });
 };
 
 const showModal = (id) => {
     show.value = true;
-    deleteId.value = id;
+    switch (props.data) {
+        case "areas":
+            deletedMessage.value = "Area cancellata";
+            confirmationMessage.value =
+                "Sei sicuro di voler cancellare quest'area?";
+            deleteObj.value = { area: id };
+            break;
+        case "customers":
+            deletedMessage.value = "Cliente cancellato";
+            confirmationMessage.value =
+                "Sei sicuro di voler cancellare questo cliente?";
+            deleteObj.value = { customer: id };
+            break;
+    }
 };
 
 const closeModal = () => {
@@ -159,6 +169,11 @@ const closeModal = () => {
         v-model="pagination"
         @input="changePage"
     />
-    <Modal :show="show" @confirmDelete="deleteElem()" @close="closeModal()" />
+    <Modal
+        :show="show"
+        :message="confirmationMessage"
+        @confirmDelete="deleteElem()"
+        @close="closeModal()"
+    />
 </template>
 <style lang=""></style>

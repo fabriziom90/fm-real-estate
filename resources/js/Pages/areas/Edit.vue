@@ -19,7 +19,7 @@ const form = useForm({
 const store = () => {
     form.put(route("admin.areas.update", { area: props.area.id }), {
         onSuccess: (resp) => {
-            $toast.success("Area aggiornata correttamente", {
+            $toast.success("Cliente aggiornato correttamente", {
                 position: "top-right",
                 duration: 3000,
             });

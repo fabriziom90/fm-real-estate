@@ -4,6 +4,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 const props = defineProps({
     show: Boolean,
     id: Number,
+    message: String,
 });
 
 const emit = defineEmits(["close", "confirmDelete"]);
@@ -75,7 +76,7 @@ const close = () => {
                         Conferma cancellazione
                     </h2>
                     <div class="py-10">
-                        Sei sicuro di voler cancellare questo elemento?
+                        {{ message }}
                     </div>
                     <div class="border-t pt-5">
                         <button

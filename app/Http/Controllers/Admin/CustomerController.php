@@ -61,7 +61,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return Inertia::render('customers/Edit', ['customer' => $customer]);
     }
 
     /**
@@ -69,7 +69,10 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        $form_data = $request->validated();
+        $customer->update($form_data);
+
+        return redirect()->route('admin.customers.index')->with('message', 'Cliente aggiornato correttamente');
     }
 
     /**
@@ -77,6 +80,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return redirect()->route('admin.customers.index');
     }
 }
