@@ -25,8 +25,12 @@ onMounted(() => {
                 Aggiungi area
             </a>
         </div>
-
-        <Table :rows="areas" :columns="columns" :data="'areas'" />
+        <div v-if="areas.length > 0">
+            <Table :rows="areas" :columns="columns" :data="'areas'" />
+        </div>
+        <div v-else>
+            <h3 class="text-3xl text-center">Nessun'area presente</h3>
+        </div>
     </AuthenticatedLayout>
 </template>
 <style lang=""></style>

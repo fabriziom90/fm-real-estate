@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(function(){
-    Route::resource('/immobili', EstateController::class);
+    Route::resource('/estates', EstateController::class);
     Route::resource('/customers', CustomerController::class);
     Route::resource('/areas', AreaController::class);
 });

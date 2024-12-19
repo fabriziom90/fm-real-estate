@@ -15,9 +15,10 @@ class EstateController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {   
+        $estates = Estate::all('id', 'area_id', 'name', 'price', 'address', 'type', 'mq');
         return Inertia::render('estates/Index', [
-            'message' => 'Messaggio pagina'
+            'estates' => $estates
         ]);
     }
 

@@ -29,10 +29,10 @@ import { Link } from "@inertiajs/vue3";
                     </div>
                     <div class="w-[120px]">
                         <a
-                            :href="route('admin.immobili.index')"
+                            :href="route('admin.estates.index')"
                             class="main-button bg-white border-white text-main-blue"
                             :class="
-                                route().current('admin.immobili.*')
+                                route().current('admin.estates.*')
                                     ? 'active'
                                     : ''
                             "

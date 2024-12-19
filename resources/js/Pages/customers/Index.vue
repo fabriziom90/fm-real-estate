@@ -32,7 +32,12 @@ onMounted(() => {
                 Aggiungi cliente
             </a>
         </div>
-        <Table :columns="columns" :rows="customers" :data="'customers'" />
+        <div v-if="customers.length > 0">
+            <Table :rows="customers" :columns="columns" :data="'customers'" />
+        </div>
+        <div v-else>
+            <h3 class="text-3xl text-center">Nessun cliente presente</h3>
+        </div>
     </AuthenticatedLayout>
 </template>
 <style lang=""></style>
