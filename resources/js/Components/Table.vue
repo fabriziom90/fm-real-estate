@@ -13,6 +13,7 @@ const props = defineProps({
     data: String,
 });
 
+const baseUrl = ref(window.location.origin);
 let search = ref("");
 const deletedMessage = ref("");
 const confirmationMessage = ref("");
@@ -137,7 +138,19 @@ const closeModal = () => {
                     v-for="row in filteredRows"
                 >
                     <td class="py-5" v-for="(property, key) in row">
-                        {{ property }}
+                        <div v-if="key == 'cover_image'">
+                            <img
+                                :src="
+                                    property != null
+                                        ? `${baseUrl}/storage/${property}`
+                                        : 'https://placehold.co/100x100'
+                                "
+                                class="preview-image"
+                            />
+                        </div>
+                        <div v-else>
+                            {{ property }}
+                        </div>
                     </td>
                     <td>
                         <a
@@ -176,4 +189,10 @@ const closeModal = () => {
         @close="closeModal()"
     />
 </template>
-<style lang=""></style>
+<style>
+.preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+</style>

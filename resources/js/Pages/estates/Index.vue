@@ -18,7 +18,9 @@ onMounted(() => {
 
 const columns = [
     "ID",
+    "Copertina",
     "Area",
+    "Venditore",
     "Nome",
     "Tipo",
     "Prezzo",
@@ -35,7 +37,7 @@ const columns = [
                 :href="route('admin.estates.create')"
                 class="tool-button bg-main-blue border-main-blue text-white"
             >
-                Aggiungi area
+                Aggiungi Immobile
             </a>
         </div>
         <div v-if="estates.length > 0">

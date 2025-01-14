@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Admin\EstateController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Api\CustomerController as CustomerApiController;
 
 Route::get('/', function () {
     return Inertia::render('Homepage', [
@@ -16,6 +17,8 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -32,6 +35,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
     Route::resource('/estates', EstateController::class);
     Route::resource('/customers', CustomerController::class);
     Route::resource('/areas', AreaController::class);
+    Route::post('/api/customers/store', [CustomerApiController::class, 'store'])->name('api.customers.store');
 });
 
 require __DIR__.'/auth.php';
