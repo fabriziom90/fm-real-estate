@@ -33,6 +33,7 @@ const form = useForm({
     balcony: "",
     description: "",
     cover_image: "",
+    gallery: "",
 });
 
 const form_customer = useForm({
@@ -91,6 +92,10 @@ const store = () => {
 
 const setFormImage = (file) => {
     form.cover_image = file[0];
+};
+
+const setGalleryImages = (files) => {
+    form.gallery = files;
 };
 </script>
 <template lang="">
@@ -212,6 +217,16 @@ const setFormImage = (file) => {
                         {{ form_customer.errors.address }}
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="my-5">
+            <h4>Galleria immagini</h4>
+            <hr />
+        </div>
+        <div class="grid grid-cols-1 gap-5">
+            <div>
+                <label class="label-text">Immagini</label>
+                <FileInput :multiple="true" @loadImage="setGalleryImages" />
             </div>
         </div>
         <div class="my-5">
