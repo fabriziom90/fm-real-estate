@@ -39,10 +39,12 @@ let filteredRows = computed(() => {
             return Object.values(row)
                 .slice(1)
                 .some((value) => {
-                    return value
-                        .toString()
-                        .toLowerCase()
-                        .includes(search.value.toLowerCase());
+                    if (value != null) {
+                        return value
+                            .toString()
+                            .toLowerCase()
+                            .includes(search.value.toLowerCase());
+                    }
                 });
         });
 
@@ -58,10 +60,12 @@ const pageNumbers = computed(() => {
             return Object.values(row)
                 .slice(1)
                 .some((value) => {
-                    return value
-                        .toString()
-                        .toLowerCase()
-                        .includes(search.value.toLowerCase());
+                    if (value != null) {
+                        return value
+                            .toString()
+                            .toLowerCase()
+                            .includes(search.value.toLowerCase());
+                    }
                 });
         });
         return values.length;
