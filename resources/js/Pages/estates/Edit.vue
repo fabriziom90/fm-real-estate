@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 import axios from "axios";
 
@@ -8,7 +8,12 @@ import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toast-notification";
 import FileInput from "../../Components/FileInput.vue";
 
-defineProps({ errors: Object, areas: Array, customers: Array });
+const props = defineProps({
+    errors: Object,
+    areas: Array,
+    customers: Array,
+    estate: Object,
+});
 
 let area = ref("");
 let file = ref([]);
@@ -16,24 +21,36 @@ let file = ref([]);
 const $toast = useToast();
 
 const form = useForm({
-    name: "",
-    area_id: "",
-    customer_id: "",
-    address: "",
-    city: "",
-    sale_type: "",
-    mq: "",
-    price: "",
-    type: "",
-    number_rooms: "",
-    number_bathrooms: "",
-    elevator: "",
-    garden: "",
-    parking_space: "",
-    balcony: "",
-    description: "",
-    cover_image: "",
-    gallery: "",
+    name: props.estate.estateName,
+    address: props.estate.address,
+    city: props.estate.city,
+    mq: props.estate.mq,
+    price: props.estate.price,
+    type: props.estate.type,
+    customer_id: props.estate.customer_id,
+    area_id: props.estate.area_id,
+    sale_type: props.estate.sale_type,
+    number_bathrooms: props.estate.number_bathrooms,
+    number_rooms: props.estate.number_rooms,
+    elevator: props.estate.elevator,
+    garden: props.estate.garden,
+    balcony: props.estate.balcony,
+    parking_space: props.estate.parking_space,
+    energetic_efficency:
+        props.estate.energetic_efficency == null
+            ? ""
+            : props.estate.energetic_efficency,
+    description: props.estate.description,
+    cover_image: props.estate.cover_image,
+    gallery: props.estate.galleryImages,
+});
+
+onMounted(() => {
+    if (typeof form.gallery === "string" && form.gallery.length > 0) {
+        form.gallery = form.gallery.split(",");
+    } else {
+        form.gallery = [];
+    }
 });
 
 const form_customer = useForm({
@@ -44,40 +61,91 @@ const form_customer = useForm({
     address: "",
 });
 
-const store = () => {
+const update = () => {
     if (form.customer_id == "new") {
         axios
             .post(route("admin.api.customers.store", form_customer))
             .then((response) => {
                 form.customer_id = response.data.results;
 
-                form.post(route("admin.estates.store"), {
-                    onSuccess: (resp) => {
-                        $toast.success("Immobile inserito", {
-                            position: "top-right",
-                            duration: 3000,
-                        });
-                    },
-                    onError: (resp) => {
-                        $toast.error(
-                            "Inserimento non completato. Verifica i campi della form.",
-                            {
+                form.transform((data) => {
+                    let formData = new FormData();
+                    Object.keys(data).forEach((key) => {
+                        if (data[key] !== null && data[key] !== undefined) {
+                            formData.append(key, data[key]);
+                        }
+                    });
+
+                    let existingImages = [];
+
+                    data.gallery.forEach((image) => {
+                        if (typeof image === "string") {
+                            existingImages.push(image); // 🔥 Mantiene immagini esistenti come stringhe
+                        } else {
+                            formData.append(`new_gallery[]`, image); // 🔥 Aggiunge nuove immagini come File
+                        }
+                    });
+
+                    formData.append(
+                        "existing_gallery",
+                        existingImages.join(",")
+                    );
+
+                    formData.append("_method", "PUT");
+                    return formData;
+                }).post(
+                    route("admin.estates.update", { estate: props.estate.id }),
+                    {
+                        onSuccess: (resp) => {
+                            $toast.success("Immobile modificato", {
                                 position: "top-right",
                                 duration: 3000,
-                            }
-                        );
-                    },
-                });
+                            });
+                        },
+                        onError: (resp) => {
+                            $toast.error(
+                                "Inserimento non completato. Verifica i campi della form.",
+                                {
+                                    position: "top-right",
+                                    duration: 3000,
+                                }
+                            );
+                        },
+                    }
+                );
             });
     } else {
-        form.post(route("admin.estates.store"), {
+        form.transform((data) => {
+            let formData = new FormData();
+            Object.keys(data).forEach((key) => {
+                if (data[key] !== null && data[key] !== undefined) {
+                    formData.append(key, data[key]);
+                }
+            });
+
+            let existingImages = [];
+            data.gallery.forEach((image) => {
+                if (typeof image === "string") {
+                    existingImages.push(image); // 🔥 Mantiene immagini esistenti come stringhe
+                } else {
+                    formData.append(`new_gallery[]`, image); // 🔥 Aggiunge nuove immagini come File
+                }
+            });
+
+            formData.append("existing_gallery", existingImages.join(","));
+
+            formData.append("_method", "PUT");
+            return formData;
+        }).post(route("admin.estates.update", { estate: props.estate.id }), {
             onSuccess: (resp) => {
-                $toast.success("Immobile inserito", {
+                $toast.success("Immobile modificato", {
                     position: "top-right",
                     duration: 3000,
                 });
             },
             onError: (resp) => {
+                console.log(form);
+                console.log(resp);
                 $toast.error(
                     "Inserimento non completato. Verifica i campi della form.",
                     {
@@ -95,7 +163,12 @@ const setFormImage = (file) => {
 };
 
 const setGalleryImages = (files) => {
-    form.gallery = files;
+    console.log(files);
+    console.log(form.gallery);
+    for (let i = 0; i < files.length; i++) {
+        form.gallery.push(files[i]);
+    }
+    console.log(form.gallery);
 };
 </script>
 <template lang="">
@@ -145,7 +218,7 @@ const setGalleryImages = (files) => {
                 <FileInput
                     :multiple="false"
                     @loadImage="setFormImage"
-                    :default="null"
+                    :default="form.cover_image"
                 />
             </div>
         </div>
@@ -233,7 +306,7 @@ const setGalleryImages = (files) => {
                 <FileInput
                     :multiple="true"
                     @loadImage="setGalleryImages"
-                    :default="null"
+                    :default="form.gallery"
                 />
             </div>
         </div>
@@ -298,7 +371,6 @@ const setGalleryImages = (files) => {
                     <option value="villino">Villino a schiera</option>
                     <option value="loft">Loft</option>
                 </select>
-
                 <div v-if="form.errors.type" class="text-danger">
                     {{ form.errors.type }}
                 </div>
@@ -319,7 +391,6 @@ const setGalleryImages = (files) => {
                     <option value="1">Vendita</option>
                     <option value="2">Affitto</option>
                 </select>
-
                 <div v-if="form.errors.sale_type" class="text-danger">
                     {{ form.errors.sale_type }}
                 </div>
@@ -388,7 +459,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="checkbox"
                     class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.elevator"
+                    :checked="form.elevator"
                 />
             </div>
             <div>
@@ -396,7 +467,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="checkbox"
                     class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.garden"
+                    :checked="form.garden"
                 />
             </div>
             <div>
@@ -404,7 +475,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="checkbox"
                     class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.parking_space"
+                    :checked="form.parking_space"
                 />
             </div>
             <div>
@@ -412,16 +483,16 @@ const setGalleryImages = (files) => {
                 <input
                     type="checkbox"
                     class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.balcony"
+                    :checked="form.balcony"
                 />
             </div>
             <div>
                 <label class="label-text me-5">Efficenza Energetica</label>
                 <select
                     class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    v-model="form.energetic_efficency"
                 >
                     <option value="">Seleziona l'efficenza energetica</option>
-
                     <option value="A+++">A+++</option>
                     <option value="A++">A++</option>
                     <option value="A+">A+</option>
@@ -443,12 +514,11 @@ const setGalleryImages = (files) => {
                 ></textarea>
             </div>
         </div>
-
         <div class="nuova-form">
             <form @submit.prevent="submit">
                 <div class="grid grid-cols-10 mt-10">
                     <button
-                        @click="store"
+                        @click="update"
                         :disabled="form.processing"
                         class="tool-button bg-main-blue border-main-blue text-white m-0"
                     >

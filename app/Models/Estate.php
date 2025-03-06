@@ -15,4 +15,8 @@ class Estate extends Model
     public function area(){
         return $this->belongsTo(Area::class);
     }
+
+    public function gallery_images(){
+        return $this->hasMany(ImageGallery::class);
+    }
 }

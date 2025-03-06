@@ -8,6 +8,7 @@ use App\Models\Customer;
 use App\Models\GalleryImage;
 use App\Http\Requests\StoreEstateRequest;
 use App\Http\Requests\UpdateEstateRequest;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -89,16 +90,40 @@ class EstateController extends Controller
      * Display the specified resource.
      */
     public function show(Estate $estate)
-    {
-        return Inertia::render('estates/Show', ['estate' => $estate]);
+    {   
+        $estate_id = $estate->id;
+        $estate = DB::table('estates')
+        ->join('customers', 'customers.id', '=', 'estates.customer_id')
+        ->join('areas', 'areas.id', '=', 'estates.area_id')
+        ->select('estates.id', 'estates.cover_image', 'areas.area', DB::raw("CONCAT(customers.name, ' ', customers.surname) as customerName"), 'estates.name as estateName', 'estates.type', 'estates.price', 'estates.mq', 'estates.address', 'estates.city', 'estates.number_rooms', 'estates.number_bathrooms', 'estates.garden', 'estates.elevator', 'estates.parking_space', 'estates.balcony', 'estates.energetic_efficency', 'estates.description',  
+        DB::raw("(SELECT GROUP_CONCAT(gallery_images.path) 
+                  FROM gallery_images 
+                  WHERE gallery_images.estate_id = estates.id) as galleryImages") 
+        )
+        ->where('estates.id', $estate_id)
+        ->get();
+        return Inertia::render('estates/Show', ['estate' => $estate[0]]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Estate $estate)
-    {
-        //
+    {   
+        $areas = Area::all();
+        $customers = Customer::all();
+        $estate_id = $estate->id;
+        $estate = DB::table('estates')
+        ->join('customers', 'customers.id', '=', 'estates.customer_id')
+        ->join('areas', 'areas.id', '=', 'estates.area_id')
+        ->select('estates.id', 'estates.cover_image', 'estates.area_id', 'areas.area', DB::raw("CONCAT(customers.name, ' ', customers.surname) as customerName"), 'estates.name as estateName', 'estates.type', 'estates.sale_type', 'estates.price', 'estates.mq', 'estates.address', 'estates.city', 'estates.number_rooms', 'estates.number_bathrooms', 'estates.garden', 'estates.elevator', 'estates.parking_space', 'estates.balcony', 'estates.energetic_efficency', 'estates.description', 'estates.customer_id',  
+        DB::raw("(SELECT GROUP_CONCAT(gallery_images.path) 
+                  FROM gallery_images 
+                  WHERE gallery_images.estate_id = estates.id) as galleryImages") 
+        )
+        ->where('estates.id', $estate_id)
+        ->get();
+        return Inertia::render('estates/Edit', ['estate' => $estate[0], 'areas' => $areas, 'customers' => $customers]);
     }
 
     /**
@@ -106,7 +131,42 @@ class EstateController extends Controller
      */
     public function update(UpdateEstateRequest $request, Estate $estate)
     {
-        //
+       
+        $form_data = $request->validated();
+        $all_data = $request->all();
+        
+        if($request->hasFile('cover_image')){
+            $path = Storage::disk('public')->put('estates_cover', $all_data['cover_image']);
+            $form_data['cover_image'] = $path; 
+        }
+
+        $all_data['parking_space'] == null ? $form_data['parking_space'] = false : $form_data['parking_space'] = true;
+        $all_data['balcony'] == null ? $form_data['balcony'] = false : $form_data['balcony'] = true;
+        $all_data['garden'] == null ? $form_data['garden'] = false : $form_data['garden'] = true;
+        $all_data['elevator'] == null ? $form_data['elevator'] = false : $form_data['elevator'] = true;
+        $form_data['area_id'] = $all_data['area_id'];
+        $form_data['customer_id'] = $all_data['customer_id'];
+
+        $estate->update($form_data);
+        $estate->save();
+
+        if($request->has('new_gallery')){
+            $images = $all_data['new_gallery'];
+
+            foreach($images as $image){
+                $path = Storage::disk('public')->put('estate_gallery_image', $image);
+
+                $data_image['estate_id'] = $estate->id;
+                $data_image['path'] = $path;
+
+                $galleryImage = new GalleryImage();
+                $galleryImage->fill($data_image);
+                $galleryImage->save();
+            }
+        }
+
+        return redirect()->route('admin.estates.index')->with('message', 'Immobile aggiunto correttamente');
+
     }
 
     /**
