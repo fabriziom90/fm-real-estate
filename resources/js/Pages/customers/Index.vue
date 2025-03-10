@@ -7,13 +7,13 @@ import { usePage } from "@inertiajs/vue3";
 
 let customers = ref([]);
 const columns = [
-    "ID",
-    "Nome",
-    "Cognome",
-    "Email",
-    "Telefono",
-    "Indirizzo",
-    "Tools",
+    { label: "ID", columnName: "id" },
+    { label: "Nome", columnName: "name" },
+    { label: "Cognome", columnName: "surname" },
+    { label: "Email", columnName: "email" },
+    { label: "Telefono", columnName: "telephone" },
+    { label: "Indirizzo", columnName: "address" },
+    { label: "Tools", columnName: "tools" },
 ];
 
 onMounted(() => {

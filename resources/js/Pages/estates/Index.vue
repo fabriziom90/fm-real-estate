@@ -17,16 +17,46 @@ onMounted(() => {
 });
 
 const columns = [
-    "ID",
-    "Copertina",
-    "Area",
-    "Venditore",
-    "Nome",
-    "Tipo",
-    "Prezzo",
-    "Mq",
-    "Indirizzo",
-    "Tools",
+    {
+        label: "ID",
+        columnName: "id",
+    },
+    {
+        label: "Copertina",
+        columnName: "copertina",
+    },
+    {
+        label: "Area",
+        columnName: "area",
+    },
+    {
+        label: "Venditore",
+        columnName: "customerName",
+    },
+    {
+        label: "Nome",
+        columnName: "estateName",
+    },
+    {
+        label: "Tipo",
+        columnName: "type",
+    },
+    {
+        label: "Prezzo",
+        columnName: "price",
+    },
+    {
+        label: "Mq",
+        columnName: "mq",
+    },
+    {
+        label: "Indirizzo",
+        columnName: "address",
+    },
+    {
+        label: "Tools",
+        columnName: "tools",
+    },
 ];
 </script>
 <template lang="">

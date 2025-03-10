@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateCustomerRequest;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 
 class CustomerController extends Controller
 {
@@ -52,8 +53,14 @@ class CustomerController extends Controller
      * Display the specified resource.
      */
     public function show(Customer $customer)
-    {
-        return Inertia::render('customers/Show', ['customer' => $customer]);
+    {   $customer_infos = DB::table('customers')
+        ->join('estates', 'estates.customer_id', '=', 'customers.id')
+        ->join('areas', 'areas.id', '=', 'estates.area_id')
+        ->select('customers.name', 'customers.surname', 'customers.email', 'customers.phone', 'customers.address', 'estates.id', 'estates.cover_image', 'estates.area_id', 'areas.area', 'estates.name as estateName', 'estates.type', 'estates.sale_type', 'estates.price', 'estates.mq', 'estates.address as estateAddress', 'estates.city', 'estates.number_rooms', 'estates.number_bathrooms', 'estates.garden', 'estates.elevator', 'estates.parking_space', 'estates.balcony', 'estates.energetic_efficency', 'estates.description', 'estates.customer_id'   
+        )
+        ->where('customers.id', $customer->id)
+        ->first();
+        return Inertia::render('customers/Show', ['customer' => $customer_infos]);
     }
 
     /**

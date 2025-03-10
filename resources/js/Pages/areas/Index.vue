@@ -6,7 +6,11 @@ import Table from "../../Components/Table.vue";
 import { usePage } from "@inertiajs/vue3";
 
 let areas = ref([]);
-const columns = ["ID", "Nome area", "Tools"];
+const columns = [
+    { label: "ID", columnName: "id" },
+    { label: "Nome area", columnName: "area" },
+    { label: "Tools", columnName: "tools" },
+];
 
 onMounted(() => {
     const { props } = usePage();
