@@ -64,11 +64,24 @@ import { Link } from "@inertiajs/vue3";
                             Aree
                         </a>
                     </div>
+                    <div class="w-[190px]">
+                        <a
+                            :href="route('admin.purchase-proposals.index')"
+                            class="main-button bg-white border-white text-main-blue"
+                            :class="
+                                route().current('admin.purchase-proposals.*')
+                                    ? 'active'
+                                    : ''
+                            "
+                        >
+                            Proposte di acquisto
+                        </a>
+                    </div>
                 </div>
             </div>
             <main>
                 <div
-                    class="w-[100%] md:w-[768px] lg:w-[990px] xl:w-[1250px] mx-auto p-8 bg-white mt-5"
+                    class="w-[100%] md:w-[768px] lg:w-[990px] xl:w-[1450px] mx-auto p-8 bg-white mt-5"
                 >
                     <slot />
                 </div>

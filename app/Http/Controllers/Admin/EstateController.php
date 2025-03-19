@@ -173,7 +173,16 @@ class EstateController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Estate $estate)
-    {
-        //
+    {   
+        if($estate->cover_image != null){
+            Storage::disk('public')->delete($estate->cover_image);
+        }
+        
+        foreach($estate->gallery_images as $image){
+            Storage::disk('public')->delete($image->path);
+        }
+
+        $estate->delete();
+        return redirect()->route('admin.estates.index');
     }
 }

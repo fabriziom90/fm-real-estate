@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Admin\EstateController;
 use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\PurchaseProposalController;
 use App\Http\Controllers\Api\CustomerController as CustomerApiController;
 use App\Http\Controllers\Api\EstateController as EstateApiController;
 
@@ -36,6 +37,7 @@ Route::middleware(['auth', 'verified'])->name('admin.')->prefix('admin')->group(
     Route::resource('/estates', EstateController::class);
     Route::resource('/customers', CustomerController::class);
     Route::resource('/areas', AreaController::class);
+    Route::resource('/purchase-proposals', PurchaseProposalController::class);
     Route::post('/api/customers/store', [CustomerApiController::class, 'store'])->name('api.customers.store');
     Route::delete('/api/estates/delete-gallery-image', [EstateApiController::class, 'destroy_gallery_image'])->name('api.estates.delete_gallery_image');
 });

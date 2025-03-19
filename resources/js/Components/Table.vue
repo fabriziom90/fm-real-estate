@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from "vue";
 import Pagination from "./Pagination.vue";
 import Modal from "./Modal.vue";
+import ColumnsFilter from "./ColumnsFilter.vue";
 import { useForm } from "@inertiajs/vue3";
 import { useToast } from "vue-toast-notification";
 
@@ -13,6 +14,7 @@ const props = defineProps({
     data: String,
 });
 
+const currentColumns = ref([...props.columns]);
 const baseUrl = ref(window.location.origin);
 let search = ref("");
 const deletedMessage = ref("");
@@ -142,6 +144,18 @@ const showModal = (id) => {
                 "Sei sicuro di voler cancellare questo cliente?";
             deleteObj.value = { customer: id };
             break;
+        case "estates":
+            deletedMessage.value = "Immobile cancellato";
+            confirmationMessage.value =
+                "Sei sicuro di voler cancellare questo immobile?";
+            deleteObj.value = { estate: id };
+            break;
+        case "purchase-proposals":
+            deletedMessage.value = "Proposta d'acquisto cancellata";
+            confirmationMessage.value =
+                "Sei sicuro di voler cancellare questa proposta d'acquisto";
+            deleteObj.value = { purchase_proposal: id };
+            break;
     }
 };
 
@@ -157,6 +171,22 @@ const sortBy = (column, data) => {
     }
 };
 
+const showHideColumn = (col) => {
+    currentColumns.value.find((elem) => {
+        if (elem.columnName === col) {
+            elem.show = !elem.show;
+            console.log(elem.show);
+        }
+    });
+};
+
+const visibleColumns = computed(() => {
+    const haveShow = currentColumns.value.every((col) => "show" in col);
+    if (haveShow) {
+        return currentColumns.value.filter((col) => col.show);
+    } else return currentColumns.value;
+});
+
 const closeModal = () => {
     show.value = false;
 };
@@ -170,15 +200,20 @@ const closeModal = () => {
             v-model="search"
             placeholder="Cerca"
         />
+        <ColumnsFilter
+            :columns="columns"
+            @showColumn="showHideColumn"
+            v-if="data === 'purchase-proposals'"
+        />
 
-        <table class="w-full table-fixed">
+        <!-- {{ visibleColumns }} -->
+        <table class="w-full table-auto">
             <thead>
                 <tr>
-                    <th v-for="(column, index) in columns">
-                        <div class="flex">
-                            <span class="w-1/2">{{ column.label }}</span>
+                    <th v-for="(column, index) in visibleColumns">
+                        <div class="flex items-center justify-center">
+                            <span class="me-2">{{ column.label }} </span>
                             <span
-                                class="flex flex-col w-1/2"
                                 v-if="
                                     column.columnName != 'copertina' &&
                                     column.columnName != 'tools'
@@ -222,33 +257,57 @@ const closeModal = () => {
                                             : ''
                                     "
                                 ></i>
-                                {{ console.log(column.columnName, sortColumn) }}
+
                                 <!-- Ordinamento discendente -->
                             </span>
                         </div>
                         <!-- {{ column }} -->
                     </th>
+                    <th>Tools</th>
                 </tr>
             </thead>
             <tbody>
                 <tr
                     class="odd:bg-white even:bg-gray-200 border-b"
-                    v-for="row in filteredRows"
+                    v-for="(row, key) in filteredRows"
+                    :key="`row-${key}`"
                 >
-                    <td class="py-5" v-for="(property, key) in row">
-                        <!-- {{ row }} -->
-                        <div v-if="key == 'cover_image'">
+                    <td
+                        class="py-5"
+                        v-for="(column, k) in visibleColumns"
+                        :key="k"
+                    >
+                        <div v-if="k == 'cover_image'">
                             <img
                                 :src="
                                     property != null
-                                        ? `${baseUrl}/storage/${property}`
+                                        ? `${baseUrl}/storage/${
+                                              row[column.columnName]
+                                          }`
                                         : 'https://placehold.co/100x100'
                                 "
                                 class="preview-image"
                             />
                         </div>
-                        <div v-else>
-                            {{ property }}
+                        <div
+                            v-else-if="
+                                column.columnName == 'elevator' ||
+                                column.columnName == 'garden' ||
+                                column.columnName == 'parking_space' ||
+                                column.columnName == 'balcony'
+                            "
+                        >
+                            {{ row[column.columnName] == 0 ? "No" : "Sì" }}
+                        </div>
+                        <div v-else-if="column.columnName == 'sale_type'">
+                            {{
+                                row[column.columnName] == 1
+                                    ? "Vendita"
+                                    : "Affitto"
+                            }}
+                        </div>
+                        <div v-else-if="column.columnName != 'tools'">
+                            {{ row[column.columnName] }}
                         </div>
                     </td>
                     <td>
@@ -288,10 +347,72 @@ const closeModal = () => {
         @close="closeModal()"
     />
 </template>
-<style>
+<style scoped>
 .preview-image {
     width: 100px;
     height: 100px;
     object-fit: cover;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #011a90;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(18px);
+    -ms-transform: translateX(18px);
+    transform: translateX(18px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
 }
 </style>

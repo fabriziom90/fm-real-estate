@@ -7,9 +7,8 @@ import { usePage } from "@inertiajs/vue3";
 
 let areas = ref([]);
 const columns = [
-    { label: "ID", columnName: "id" },
-    { label: "Nome area", columnName: "area" },
-    { label: "Tools", columnName: "tools" },
+    { label: "ID", columnName: "id", show: true },
+    { label: "Nome area", columnName: "area", show: true },
 ];
 
 onMounted(() => {

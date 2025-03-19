@@ -17,6 +17,6 @@ class Estate extends Model
     }
 
     public function gallery_images(){
-        return $this->hasMany(ImageGallery::class);
+        return $this->hasMany(GalleryImage::class);
     }
 }

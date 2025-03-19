@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Area extends Model
 {
     protected $fillable = ['area'];
+
+    public function purchase_proposals(){
+        return $this->hasMany(Area::class);
+    }
 }

@@ -20,42 +20,47 @@ const columns = [
     {
         label: "ID",
         columnName: "id",
+        show: true,
     },
     {
         label: "Copertina",
         columnName: "copertina",
+        show: true,
     },
     {
         label: "Area",
         columnName: "area",
+        show: true,
     },
     {
         label: "Venditore",
         columnName: "customerName",
+        show: true,
     },
     {
         label: "Nome",
         columnName: "estateName",
+        show: true,
     },
     {
         label: "Tipo",
         columnName: "type",
+        show: true,
     },
     {
         label: "Prezzo",
         columnName: "price",
+        show: true,
     },
     {
         label: "Mq",
         columnName: "mq",
+        show: true,
     },
     {
         label: "Indirizzo",
         columnName: "address",
-    },
-    {
-        label: "Tools",
-        columnName: "tools",
+        show: true,
     },
 ];
 </script>
