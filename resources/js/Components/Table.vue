@@ -272,11 +272,7 @@ const closeModal = () => {
                     v-for="(row, key) in filteredRows"
                     :key="`row-${key}`"
                 >
-                    <td
-                        class="py-5"
-                        v-for="(column, k) in visibleColumns"
-                        :key="k"
-                    >
+                    <td class="py-5" v-for="(column, k) in columns" :key="k">
                         <div v-if="k == 'cover_image'">
                             <img
                                 :src="
@@ -305,6 +301,15 @@ const closeModal = () => {
                                     ? "Vendita"
                                     : "Affitto"
                             }}
+                        </div>
+                        <div
+                            v-else-if="
+                                column.columnName == 'price' ||
+                                column.columnName == 'price_from' ||
+                                column.columnName == 'price_to'
+                            "
+                        >
+                            {{ row[column.columnName] }} €
                         </div>
                         <div v-else-if="column.columnName != 'tools'">
                             {{ row[column.columnName] }}

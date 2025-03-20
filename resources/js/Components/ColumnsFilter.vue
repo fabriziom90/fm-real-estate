@@ -25,6 +25,7 @@ const props = defineProps({
                         <input
                             type="checkbox"
                             @change="emit('showColumn', column.columnName)"
+                            :checked="column.show"
                         />
                         <span class="slider round"></span>
                     </label>
