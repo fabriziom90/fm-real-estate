@@ -272,7 +272,11 @@ const closeModal = () => {
                     v-for="(row, key) in filteredRows"
                     :key="`row-${key}`"
                 >
-                    <td class="py-5" v-for="(column, k) in columns" :key="k">
+                    <td
+                        class="py-5"
+                        v-for="(column, k) in visibleColumns"
+                        :key="k"
+                    >
                         <div v-if="k == 'cover_image'">
                             <img
                                 :src="

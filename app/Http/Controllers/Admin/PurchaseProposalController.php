@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\PurchaseProposal;
+use App\Models\Customer;
+use App\Models\Area;
 use App\Http\Requests\StorePurchaseProposalRequest;
 use App\Http\Requests\UpdatePurchaseProposalRequest;
 use App\Http\Controllers\Controller;
@@ -30,8 +32,10 @@ class PurchaseProposalController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        //
+    {   
+        $customers = Customer::all();
+        $areas = Area::all();
+        return Inertia::render('purchase_proposals/Create', ['customers' => $customers, 'areas' => $areas]);
     }
 
     /**
@@ -39,7 +43,21 @@ class PurchaseProposalController extends Controller
      */
     public function store(StorePurchaseProposalRequest $request)
     {
-        //
+        $form_data = $request->validated();
+        $all_data = $request->all();
+        $all_data['parking_space'] == null ? $form_data['parking_space'] = false : $form_data['parking_space'] = true;
+        $all_data['balcony'] == null ? $form_data['balcony'] = false : $form_data['balcony'] = true;
+        $all_data['garden'] == null ? $form_data['garden'] = false : $form_data['garden'] = true;
+        $all_data['elevator'] == null ? $form_data['elevator'] = false : $form_data['elevator'] = true;
+        $form_data['area_id'] = $all_data['area_id'];
+        $form_data['customer_id'] = $all_data['customer_id'];
+        
+        $purchase_proposal = new PurchaseProposal();
+        
+        $purchase_proposal->fill($form_data);
+        $purchase_proposal->save();
+
+        return redirect()->route('admin.purchase-proposals.index')->with('message', 'Proposta d\'acquisto inserita correttamente');
     }
 
     /**

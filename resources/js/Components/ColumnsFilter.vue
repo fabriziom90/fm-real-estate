@@ -45,7 +45,7 @@ const props = defineProps({
     position: relative;
     display: inline-block;
     width: 40px;
-    height: 20px;
+    height: 21px;
 }
 
 /* Hide default HTML checkbox */
