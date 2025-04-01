@@ -12,45 +12,36 @@ const props = defineProps({
     errors: Object,
     areas: Array,
     customers: Array,
-    estate: Object,
+    purchase_proposal: Object,
 });
 
 let area = ref("");
-let file = ref([]);
+const gardenCheckbox = ref(null);
+const parkingSpaceCheckbox = ref(null);
+const elevatorCheckbox = ref(null);
+const balconyCheckbox = ref(null);
 
 const $toast = useToast();
 
 const form = useForm({
-    name: props.estate.estateName,
-    address: props.estate.address,
-    city: props.estate.city,
-    mq: props.estate.mq,
-    price: props.estate.price,
-    type: props.estate.type,
-    customer_id: props.estate.customer_id,
-    area_id: props.estate.area_id,
-    sale_type: props.estate.sale_type,
-    number_bathrooms: props.estate.number_bathrooms,
-    number_rooms: props.estate.number_rooms,
-    elevator: props.estate.elevator,
-    garden: props.estate.garden,
-    balcony: props.estate.balcony,
-    parking_space: props.estate.parking_space,
-    energetic_efficency:
-        props.estate.energetic_efficency == null
-            ? ""
-            : props.estate.energetic_efficency,
-    description: props.estate.description,
-    cover_image: props.estate.cover_image,
-    gallery: props.estate.galleryImages,
-});
-
-onMounted(() => {
-    if (typeof form.gallery === "string" && form.gallery.length > 0) {
-        form.gallery = form.gallery.split(",");
-    } else {
-        form.gallery = [];
-    }
+    area_id: props.purchase_proposal.area_id,
+    customer_id: props.purchase_proposal.customer_id,
+    address: props.purchase_proposal.address,
+    city: props.purchase_proposal.city,
+    sale_type: props.purchase_proposal.sale_type,
+    mq_from: props.purchase_proposal.mq_from,
+    mq_to: props.purchase_proposal.mq_to,
+    price_from: props.purchase_proposal.price_from,
+    price_to: props.purchase_proposal.price_to,
+    type: props.purchase_proposal.type,
+    number_rooms: props.purchase_proposal.number_rooms,
+    number_bathrooms: props.purchase_proposal.number_bathrooms,
+    elevator: props.purchase_proposal.elevator,
+    garden: props.purchase_proposal.garden,
+    parking_space: props.purchase_proposal.parking_space,
+    balcony: props.purchase_proposal.balcony,
+    energetic_efficency: props.purchase_proposal.energetic_efficency,
+    notes: props.purchase_proposal.notes,
 });
 
 const form_customer = useForm({
@@ -61,43 +52,27 @@ const form_customer = useForm({
     address: "",
 });
 
-const update = () => {
+onMounted(() => {
+    gardenCheckbox.value.checked = form.garden;
+    parkingSpaceCheckbox.value.checked = form.parkingSpace;
+    balconyCheckbox.value.checked = form.balcony;
+    elevatorCheckbox.value.checked = form.elevator;
+});
+
+const store = () => {
     if (form.customer_id == "new") {
         axios
             .post(route("admin.api.customers.store", form_customer))
             .then((response) => {
                 form.customer_id = response.data.results;
 
-                form.transform((data) => {
-                    let formData = new FormData();
-                    Object.keys(data).forEach((key) => {
-                        if (data[key] !== null && data[key] !== undefined) {
-                            formData.append(key, data[key]);
-                        }
-                    });
-
-                    let existingImages = [];
-
-                    data.gallery.forEach((image) => {
-                        if (typeof image === "string") {
-                            existingImages.push(image); // 🔥 Mantiene immagini esistenti come stringhe
-                        } else {
-                            formData.append(`new_gallery[]`, image); // 🔥 Aggiunge nuove immagini come File
-                        }
-                    });
-
-                    formData.append(
-                        "existing_gallery",
-                        existingImages.join(",")
-                    );
-
-                    formData.append("_method", "PUT");
-                    return formData;
-                }).post(
-                    route("admin.estates.update", { estate: props.estate.id }),
+                form.put(
+                    route("admin.purchase-proposals.update", {
+                        purchase_proposal: props.purchase_proposal.id,
+                    }),
                     {
                         onSuccess: (resp) => {
-                            $toast.success("Immobile modificato", {
+                            $toast.success("Immobile inserito", {
                                 position: "top-right",
                                 duration: 3000,
                             });
@@ -115,83 +90,46 @@ const update = () => {
                 );
             });
     } else {
-        form.transform((data) => {
-            let formData = new FormData();
-            Object.keys(data).forEach((key) => {
-                if (data[key] !== null && data[key] !== undefined) {
-                    formData.append(key, data[key]);
-                }
-            });
-
-            let existingImages = [];
-            data.gallery.forEach((image) => {
-                if (typeof image === "string") {
-                    existingImages.push(image);
-                } else {
-                    formData.append(`new_gallery[]`, image);
-                }
-            });
-
-            formData.append("existing_gallery", existingImages.join(","));
-
-            formData.append("_method", "PUT");
-            return formData;
-        }).post(route("admin.estates.update", { estate: props.estate.id }), {
-            onSuccess: (resp) => {
-                $toast.success("Immobile modificato", {
-                    position: "top-right",
-                    duration: 3000,
-                });
-            },
-            onError: (resp) => {
-                $toast.error(
-                    "Inserimento non completato. Verifica i campi della form.",
-                    {
-                        position: "top-right",
-                        duration: 3000,
-                    }
-                );
-            },
-        });
-    }
-};
-
-const setFormImage = (file) => {
-    form.cover_image = file[0];
-};
-
-const setGalleryImages = (files) => {
-    console.log(files);
-    console.log(form.gallery);
-    for (let i = 0; i < files.length; i++) {
-        form.gallery.push(files[i]);
+        form.put(
+            route("admin.purchase-proposals.update", {
+                purchase_proposal: props.purchase_proposal.id,
+            }),
+            {
+                onSuccess: (resp) => {
+                    $toast.success(
+                        "Proposta d'acquisto modificata correttamente",
+                        {
+                            position: "top-right",
+                            duration: 3000,
+                        }
+                    );
+                },
+                onError: (resp) => {
+                    $toast.error(
+                        "Inserimento non completato. Verifica i campi della form.",
+                        {
+                            position: "top-right",
+                            duration: 3000,
+                        }
+                    );
+                },
+            }
+        );
     }
 };
 </script>
 <template lang="">
     <AuthenticatedLayout>
         <div class="flex justify-between items-center mb-5">
-            <h2 class="text-3xl">Aggiungi Immobile</h2>
+            <h2 class="text-3xl">Aggiungi proposta d'acquisto</h2>
             <a
                 :href="route('admin.estates.index')"
                 class="tool-button bg-main-blue border-main-blue text-white"
             >
-                Visualizza immobili
+                Visualizza proposte d'acquisto
             </a>
         </div>
         <div class="grid grid-cols-3 gap-5">
-            <div>
-                <label class="label-text">Nome</label>
-                <input
-                    type="text"
-                    placeholder="Nome"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.name"
-                />
-                <div v-if="form.errors.name" class="text-danger">
-                    {{ form.errors.name }}
-                </div>
-            </div>
             <div>
                 <label class="label-text">Cliente</label>
                 <select
@@ -209,14 +147,6 @@ const setGalleryImages = (files) => {
                     </option>
                     <option value="new">Inserisci nuovo cliente</option>
                 </select>
-            </div>
-            <div>
-                <label class="label-text">Immagine copertina</label>
-                <FileInput
-                    :multiple="false"
-                    @loadImage="setFormImage"
-                    :default="form.cover_image"
-                />
             </div>
         </div>
         <div v-if="form.customer_id == 'new'">
@@ -294,20 +224,6 @@ const setGalleryImages = (files) => {
             </div>
         </div>
         <div class="my-5">
-            <h4>Galleria immagini</h4>
-            <hr />
-        </div>
-        <div class="grid grid-cols-1 gap-5">
-            <div>
-                <label class="label-text">Immagini</label>
-                <FileInput
-                    :multiple="true"
-                    @loadImage="setGalleryImages"
-                    :default="form.gallery"
-                />
-            </div>
-        </div>
-        <div class="my-5">
             <h4>Località immobile</h4>
             <hr />
         </div>
@@ -330,18 +246,6 @@ const setGalleryImages = (files) => {
                 </select>
                 <div v-if="form.errors.name" class="text-danger">
                     {{ form.errors.name }}
-                </div>
-            </div>
-            <div>
-                <label class="label-text">Indirizzo</label>
-                <input
-                    type="text"
-                    placeholder="Indirizzo"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.address"
-                />
-                <div v-if="form.errors.address" class="text-danger">
-                    {{ form.errors.address }}
                 </div>
             </div>
             <div>
@@ -368,6 +272,7 @@ const setGalleryImages = (files) => {
                     <option value="villino">Villino a schiera</option>
                     <option value="loft">Loft</option>
                 </select>
+
                 <div v-if="form.errors.type" class="text-danger">
                     {{ form.errors.type }}
                 </div>
@@ -388,21 +293,35 @@ const setGalleryImages = (files) => {
                     <option value="1">Vendita</option>
                     <option value="2">Affitto</option>
                 </select>
+
                 <div v-if="form.errors.sale_type" class="text-danger">
                     {{ form.errors.sale_type }}
                 </div>
             </div>
             <div>
-                <label class="label-text">Prezzo</label>
+                <label class="label-text">Prezzo Da</label>
                 <input
                     min="0"
                     type="number"
                     placeholder="Prezzo"
                     class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.price"
+                    v-model="form.price_from"
                 />
-                <div v-if="form.errors.price" class="text-danger">
-                    {{ form.errors.price }}
+                <div v-if="form.errors.price_from" class="text-danger">
+                    {{ form.errors.price_from }}
+                </div>
+            </div>
+            <div>
+                <label class="label-text">Prezzo A</label>
+                <input
+                    min="0"
+                    type="number"
+                    placeholder="Prezzo"
+                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    v-model="form.price_to"
+                />
+                <div v-if="form.errors.price_to" class="text-danger">
+                    {{ form.errors.price_to }}
                 </div>
             </div>
         </div>
@@ -412,15 +331,27 @@ const setGalleryImages = (files) => {
         </div>
         <div class="grid grid-cols-3 gap-5">
             <div>
-                <label class="label-text">Metri quadri</label>
+                <label class="label-text">Metri quadri Da</label>
                 <input
                     type="number"
                     placeholder="Metri quadri"
                     class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.mq"
+                    v-model="form.mq_from"
                 />
-                <div v-if="form.errors.mq" class="text-danger">
-                    {{ form.errors.mq }}
+                <div v-if="form.errors.mq_from" class="text-danger">
+                    {{ form.errors.mq_from }}
+                </div>
+            </div>
+            <div>
+                <label class="label-text">Metri quadri A</label>
+                <input
+                    type="number"
+                    placeholder="Metri quadri"
+                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    v-model="form.mq_to"
+                />
+                <div v-if="form.errors.mq_to" class="text-danger">
+                    {{ form.errors.mq_to }}
                 </div>
             </div>
             <div>
@@ -456,7 +387,8 @@ const setGalleryImages = (files) => {
                 <input
                     type="checkbox"
                     class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
-                    :checked="form.elevator"
+                    ref="elevatorCheckbox"
+                    v-model="form.elevator"
                 />
             </div>
             <div>
@@ -464,7 +396,8 @@ const setGalleryImages = (files) => {
                 <input
                     type="checkbox"
                     class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
-                    :checked="form.garden"
+                    ref="gardenCheckbox"
+                    v-model="form.garden"
                 />
             </div>
             <div>
@@ -472,7 +405,8 @@ const setGalleryImages = (files) => {
                 <input
                     type="checkbox"
                     class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
-                    :checked="form.parking_space"
+                    ref="parkingSpaceCheckbox"
+                    v-model="form.parking_space"
                 />
             </div>
             <div>
@@ -480,7 +414,8 @@ const setGalleryImages = (files) => {
                 <input
                     type="checkbox"
                     class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
-                    :checked="form.balcony"
+                    ref="balconyCheckbox"
+                    v-model="form.balcony"
                 />
             </div>
             <div>
@@ -490,6 +425,7 @@ const setGalleryImages = (files) => {
                     v-model="form.energetic_efficency"
                 >
                     <option value="">Seleziona l'efficenza energetica</option>
+
                     <option value="A+++">A+++</option>
                     <option value="A++">A++</option>
                     <option value="A+">A+</option>
@@ -501,21 +437,19 @@ const setGalleryImages = (files) => {
                 </select>
             </div>
         </div>
-        <div class="grid grid-cols-3 gap-5">
-            <div>
-                <label class="label-text">Descrizione</label>
-                <textarea
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
-                    v-model="form.description"
-                    placeholder="Descrizione"
-                ></textarea>
-            </div>
+        <div>
+            <label class="label-text me-5">Note</label>
+            <textarea
+                rows="10"
+                class="w-100 text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                v-model="form.notes"
+            ></textarea>
         </div>
         <div class="nuova-form">
             <form @submit.prevent="submit">
                 <div class="grid grid-cols-10 mt-10">
                     <button
-                        @click="update"
+                        @click="store"
                         :disabled="form.processing"
                         class="tool-button bg-main-blue border-main-blue text-white m-0"
                     >
