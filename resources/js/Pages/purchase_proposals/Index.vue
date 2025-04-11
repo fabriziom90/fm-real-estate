@@ -20,7 +20,7 @@ const columns = [
     {
         label: "ID",
         columnName: "id",
-        show: true,
+        show: false,
     },
     {
         label: "Area",
@@ -75,27 +75,27 @@ const columns = [
     {
         label: "Tipologia Vendita",
         columnName: "sale_type",
-        show: true,
+        show: false,
     },
     {
         label: "Ascensore",
         columnName: "elevator",
-        show: true,
+        show: false,
     },
     {
         label: "Giardino",
         columnName: "garden",
-        show: true,
+        show: false,
     },
     {
         label: "Parcheggio",
         columnName: "parking_space",
-        show: true,
+        show: false,
     },
     {
         label: "Balcone",
         columnName: "balcony",
-        show: true,
+        show: false,
     },
 ];
 </script>

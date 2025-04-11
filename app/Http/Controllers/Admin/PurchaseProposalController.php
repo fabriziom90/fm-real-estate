@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\PurchaseProposal;
 use App\Models\Customer;
 use App\Models\Area;
+use App\Models\Estate;
 use App\Http\Requests\StorePurchaseProposalRequest;
 use App\Http\Requests\UpdatePurchaseProposalRequest;
 use App\Http\Controllers\Controller;
@@ -64,8 +65,22 @@ class PurchaseProposalController extends Controller
      * Display the specified resource.
      */
     public function show(PurchaseProposal $purchaseProposal)
-    {
-        
+    {   $purchase_id = $purchaseProposal->id;
+        $purchaseProposal = DB::table('purchase_proposals')
+        ->join('customers', 'customers.id', '=', 'purchase_proposals.customer_id')
+        ->join('areas', 'areas.id', '=', 'purchase_proposals.area_id')
+        ->select('purchase_proposals.id', 'areas.area', 'purchase_proposals.area_id', DB::raw("CONCAT(customers.name, ' ', customers.surname) as customerName"),  'purchase_proposals.type', 'purchase_proposals.sale_type', 'purchase_proposals.price_from', 'purchase_proposals.price_to', 'purchase_proposals.mq_from', 'purchase_proposals.mq_to', 'purchase_proposals.city', 'purchase_proposals.number_rooms', 'purchase_proposals.number_bathrooms', 'purchase_proposals.garden', 'purchase_proposals.elevator', 'purchase_proposals.parking_space', 'purchase_proposals.balcony', 'purchase_proposals.energetic_efficency', 'purchase_proposals.notes')
+        ->where('purchase_proposals.id', $purchase_id)
+        ->get();
+
+        $estates = DB::table('estates')
+        ->join('customers', 'customers.id', '=', 'estates.customer_id')
+        ->join('areas', 'areas.id', '=', 'estates.area_id')
+        ->select('estates.id', 'estates.cover_image', 'estates.area_id', 'areas.area', DB::raw("CONCAT(customers.name, ' ', customers.surname) as customerName"), 'estates.name as estateName', 'estates.type', 'estates.price', 'estates.mq', 'estates.address', 'estates.sale_type', 'estates.energetic_efficency', 'estates.number_rooms', 'estates.number_bathrooms', 'estates.elevator', 'estates.garden', 'estates.parking_space', 'estates.balcony' )
+        ->get();
+
+        // dd($purchaseProposal[0]);
+        return Inertia::render('purchase_proposals/Show', ['purchase_proposal' => $purchaseProposal[0], 'estates' => $estates]);
     }
 
     /**
@@ -103,6 +118,7 @@ class PurchaseProposalController extends Controller
      */
     public function destroy(PurchaseProposal $purchaseProposal)
     {
-        //
+        $purchaseProposal->delete();
+        return redirect()->route('admin.purchase-proposals.index');
     }
 }
