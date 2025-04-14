@@ -277,10 +277,10 @@ const closeModal = () => {
                         v-for="(column, k) in visibleColumns"
                         :key="k"
                     >
-                        <div v-if="k == 'cover_image'">
+                        <div v-if="column.columnName == 'cover_image'">
                             <img
                                 :src="
-                                    property != null
+                                    row[column.columnName] != null
                                         ? `${baseUrl}/storage/${
                                               row[column.columnName]
                                           }`
@@ -358,8 +358,8 @@ const closeModal = () => {
 </template>
 <style scoped>
 .preview-image {
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
     object-fit: cover;
 }
 

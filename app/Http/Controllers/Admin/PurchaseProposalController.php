@@ -105,9 +105,10 @@ class PurchaseProposalController extends Controller
         $all_data['balcony'] == 0 ? $form_data['balcony'] = false : $form_data['balcony'] = true;
         $all_data['garden'] == 0 ? $form_data['garden'] = false : $form_data['garden'] = true;
         $all_data['elevator'] == 0 ? $form_data['elevator'] = false : $form_data['elevator'] = true;
+
         $form_data['area_id'] = $all_data['area_id'];
         $form_data['customer_id'] = $all_data['customer_id'];
-
+        
         $purchaseProposal->update($form_data);
 
         return redirect()->route('admin.purchase-proposals.index')->with('message', 'Proposta d\'acquisto modificata correttamente');

@@ -140,6 +140,8 @@ class EstateController extends Controller
             $form_data['cover_image'] = $path; 
         }
 
+        
+
         $all_data['parking_space'] == null ? $form_data['parking_space'] = false : $form_data['parking_space'] = true;
         $all_data['balcony'] == null ? $form_data['balcony'] = false : $form_data['balcony'] = true;
         $all_data['garden'] == null ? $form_data['garden'] = false : $form_data['garden'] = true;
@@ -148,7 +150,7 @@ class EstateController extends Controller
         $form_data['customer_id'] = $all_data['customer_id'];
 
         $estate->update($form_data);
-        $estate->save();
+        
 
         if($request->has('new_gallery')){
             $images = $all_data['new_gallery'];

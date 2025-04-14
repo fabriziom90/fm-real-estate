@@ -54,7 +54,7 @@ const form_customer = useForm({
 
 onMounted(() => {
     gardenCheckbox.value.checked = form.garden;
-    parkingSpaceCheckbox.value.checked = form.parkingSpace;
+    parkingSpaceCheckbox.value.checked = form.parking_space;
     balconyCheckbox.value.checked = form.balcony;
     elevatorCheckbox.value.checked = form.elevator;
 });
@@ -121,7 +121,7 @@ const store = () => {
 <template lang="">
     <AuthenticatedLayout>
         <div class="flex justify-between items-center mb-5">
-            <h2 class="text-3xl">Aggiungi proposta d'acquisto</h2>
+            <h2 class="text-3xl">Modifica proposta d'acquisto</h2>
             <a
                 :href="route('admin.estates.index')"
                 class="tool-button bg-main-blue border-main-blue text-white"
@@ -134,7 +134,7 @@ const store = () => {
                 <label class="label-text">Cliente</label>
                 <select
                     v-model="form.customer_id"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     required
                 >
                     <option value="">Seleziona cliente</option>
@@ -160,7 +160,7 @@ const store = () => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.name"
                     />
                     <div v-if="form_customer.errors.name" class="text-danger">
@@ -172,7 +172,7 @@ const store = () => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.surname"
                     />
                     <div
@@ -187,7 +187,7 @@ const store = () => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.email"
                     />
                     <div v-if="form_customer.errors.email" class="text-danger">
@@ -199,7 +199,7 @@ const store = () => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.phone"
                     />
                     <div v-if="form_customer.errors.phone" class="text-danger">
@@ -211,7 +211,7 @@ const store = () => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.address"
                     />
                     <div
@@ -232,7 +232,7 @@ const store = () => {
                 <label class="label-text">Area</label>
                 <select
                     v-model="form.area_id"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     required
                 >
                     <option value="">Seleziona area</option>
@@ -253,7 +253,7 @@ const store = () => {
                 <input
                     type="text"
                     placeholder="Città"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.city"
                 />
                 <div v-if="form.errors.city" class="text-danger">
@@ -264,7 +264,7 @@ const store = () => {
                 <label class="label-text">Tipologia</label>
                 <select
                     v-model="form.type"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                 >
                     <option value="">Seleziona tipologia</option>
                     <option value="appartamento">Appartmento</option>
@@ -287,7 +287,7 @@ const store = () => {
                 <label class="label-text">Tipologia di vendita</label>
                 <select
                     v-model="form.sale_type"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                 >
                     <option value="">Seleziona tipologia</option>
                     <option value="1">Vendita</option>
@@ -304,7 +304,7 @@ const store = () => {
                     min="0"
                     type="number"
                     placeholder="Prezzo"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.price_from"
                 />
                 <div v-if="form.errors.price_from" class="text-danger">
@@ -317,7 +317,7 @@ const store = () => {
                     min="0"
                     type="number"
                     placeholder="Prezzo"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.price_to"
                 />
                 <div v-if="form.errors.price_to" class="text-danger">
@@ -335,7 +335,7 @@ const store = () => {
                 <input
                     type="number"
                     placeholder="Metri quadri"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.mq_from"
                 />
                 <div v-if="form.errors.mq_from" class="text-danger">
@@ -347,7 +347,7 @@ const store = () => {
                 <input
                     type="number"
                     placeholder="Metri quadri"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.mq_to"
                 />
                 <div v-if="form.errors.mq_to" class="text-danger">
@@ -359,7 +359,7 @@ const store = () => {
                 <input
                     type="number"
                     placeholder="Numero stanze"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.number_rooms"
                     min="0"
                 />
@@ -372,7 +372,7 @@ const store = () => {
                 <input
                     type="number"
                     placeholder="Numero bagni"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.number_bathrooms"
                     min="0"
                 />
@@ -386,7 +386,7 @@ const store = () => {
                 <label class="label-text me-5">Ascensore</label>
                 <input
                     type="checkbox"
-                    class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg border-gray-300 focus:border-main-blue focus:ring-main-blue"
                     ref="elevatorCheckbox"
                     v-model="form.elevator"
                 />
@@ -395,7 +395,7 @@ const store = () => {
                 <label class="label-text me-5">Giardino</label>
                 <input
                     type="checkbox"
-                    class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg border-gray-300 focus:border-main-blue focus:ring-main-blue"
                     ref="gardenCheckbox"
                     v-model="form.garden"
                 />
@@ -404,7 +404,7 @@ const store = () => {
                 <label class="label-text me-5">Parcheggio/Posto auto</label>
                 <input
                     type="checkbox"
-                    class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg border-gray-300 focus:border-main-blue focus:ring-main-blue"
                     ref="parkingSpaceCheckbox"
                     v-model="form.parking_space"
                 />
@@ -413,7 +413,7 @@ const store = () => {
                 <label class="label-text me-5">Balcone/Terrazzo</label>
                 <input
                     type="checkbox"
-                    class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg border-gray-300 focus:border-main-blue focus:ring-main-blue"
                     ref="balconyCheckbox"
                     v-model="form.balcony"
                 />
@@ -421,7 +421,7 @@ const store = () => {
             <div>
                 <label class="label-text me-5">Efficenza Energetica</label>
                 <select
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.energetic_efficency"
                 >
                     <option value="">Seleziona l'efficenza energetica</option>
@@ -441,7 +441,7 @@ const store = () => {
             <label class="label-text me-5">Note</label>
             <textarea
                 rows="10"
-                class="w-100 text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                class="w-100 text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                 v-model="form.notes"
             ></textarea>
         </div>

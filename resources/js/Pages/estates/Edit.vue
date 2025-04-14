@@ -185,7 +185,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="text"
                     placeholder="Nome"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.name"
                 />
                 <div v-if="form.errors.name" class="text-danger">
@@ -196,7 +196,7 @@ const setGalleryImages = (files) => {
                 <label class="label-text">Cliente</label>
                 <select
                     v-model="form.customer_id"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     required
                 >
                     <option value="">Seleziona cliente</option>
@@ -230,7 +230,7 @@ const setGalleryImages = (files) => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.name"
                     />
                     <div v-if="form_customer.errors.name" class="text-danger">
@@ -242,7 +242,7 @@ const setGalleryImages = (files) => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.surname"
                     />
                     <div
@@ -257,7 +257,7 @@ const setGalleryImages = (files) => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.email"
                     />
                     <div v-if="form_customer.errors.email" class="text-danger">
@@ -269,7 +269,7 @@ const setGalleryImages = (files) => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.phone"
                     />
                     <div v-if="form_customer.errors.phone" class="text-danger">
@@ -281,7 +281,7 @@ const setGalleryImages = (files) => {
                     <input
                         type="text"
                         placeholder="Nome"
-                        class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form_customer.address"
                     />
                     <div
@@ -316,7 +316,7 @@ const setGalleryImages = (files) => {
                 <label class="label-text">Area</label>
                 <select
                     v-model="form.area_id"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     required
                 >
                     <option value="">Seleziona area</option>
@@ -337,7 +337,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="text"
                     placeholder="Indirizzo"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.address"
                 />
                 <div v-if="form.errors.address" class="text-danger">
@@ -349,7 +349,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="text"
                     placeholder="Città"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.city"
                 />
                 <div v-if="form.errors.city" class="text-danger">
@@ -360,7 +360,7 @@ const setGalleryImages = (files) => {
                 <label class="label-text">Tipologia</label>
                 <select
                     v-model="form.type"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                 >
                     <option value="">Seleziona tipologia</option>
                     <option value="appartamento">Appartmento</option>
@@ -382,7 +382,7 @@ const setGalleryImages = (files) => {
                 <label class="label-text">Tipologia di vendita</label>
                 <select
                     v-model="form.sale_type"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                 >
                     <option value="">Seleziona tipologia</option>
                     <option value="1">Vendita</option>
@@ -398,7 +398,7 @@ const setGalleryImages = (files) => {
                     min="0"
                     type="number"
                     placeholder="Prezzo"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.price"
                 />
                 <div v-if="form.errors.price" class="text-danger">
@@ -416,7 +416,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="number"
                     placeholder="Metri quadri"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.mq"
                 />
                 <div v-if="form.errors.mq" class="text-danger">
@@ -428,7 +428,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="number"
                     placeholder="Numero stanze"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.number_rooms"
                     min="0"
                 />
@@ -441,7 +441,7 @@ const setGalleryImages = (files) => {
                 <input
                     type="number"
                     placeholder="Numero bagni"
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.number_bathrooms"
                     min="0"
                 />
@@ -455,7 +455,7 @@ const setGalleryImages = (files) => {
                 <label class="label-text me-5">Ascensore</label>
                 <input
                     type="checkbox"
-                    class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg border-gray-300 focus:border-main-blue focus:ring-main-blue"
                     :checked="form.elevator"
                 />
             </div>
@@ -463,7 +463,7 @@ const setGalleryImages = (files) => {
                 <label class="label-text me-5">Giardino</label>
                 <input
                     type="checkbox"
-                    class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg border-gray-300 focus:border-main-blue focus:ring-main-blue"
                     :checked="form.garden"
                 />
             </div>
@@ -471,7 +471,7 @@ const setGalleryImages = (files) => {
                 <label class="label-text me-5">Parcheggio/Posto auto</label>
                 <input
                     type="checkbox"
-                    class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg border-gray-300 focus:border-main-blue focus:ring-main-blue"
                     :checked="form.parking_space"
                 />
             </div>
@@ -479,14 +479,14 @@ const setGalleryImages = (files) => {
                 <label class="label-text me-5">Balcone/Terrazzo</label>
                 <input
                     type="checkbox"
-                    class="text-xs border-gray-300 focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg border-gray-300 focus:border-main-blue focus:ring-main-blue"
                     :checked="form.balcony"
                 />
             </div>
             <div>
                 <label class="label-text me-5">Efficenza Energetica</label>
                 <select
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.energetic_efficency"
                 >
                     <option value="">Seleziona l'efficenza energetica</option>
@@ -505,7 +505,7 @@ const setGalleryImages = (files) => {
             <div>
                 <label class="label-text">Descrizione</label>
                 <textarea
-                    class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                    class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                     v-model="form.description"
                     placeholder="Descrizione"
                 ></textarea>

@@ -24,7 +24,7 @@ const columns = [
     },
     {
         label: "Copertina",
-        columnName: "copertina",
+        columnName: "cover_image",
         show: true,
     },
     {

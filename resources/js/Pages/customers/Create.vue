@@ -60,7 +60,7 @@ const store = () => {
                         <input
                             type="text"
                             placeholder="Nome"
-                            class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                            class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                             v-model="form.name"
                         />
                         <div v-if="form.errors.name" class="text-danger">
@@ -72,7 +72,7 @@ const store = () => {
                         <input
                             type="text"
                             placeholder="Nome"
-                            class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                            class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                             v-model="form.surname"
                         />
                         <div v-if="form.errors.surname" class="text-danger">
@@ -84,7 +84,7 @@ const store = () => {
                         <input
                             type="text"
                             placeholder="Nome"
-                            class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                            class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                             v-model="form.email"
                         />
                         <div v-if="form.errors.email" class="text-danger">
@@ -96,7 +96,7 @@ const store = () => {
                         <input
                             type="text"
                             placeholder="Nome"
-                            class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                            class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                             v-model="form.phone"
                         />
                         <div v-if="form.errors.phone" class="text-danger">
@@ -108,7 +108,7 @@ const store = () => {
                         <input
                             type="text"
                             placeholder="Nome"
-                            class="text-xs rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                            class="text-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                             v-model="form.address"
                         />
                         <div v-if="form.errors.address" class="text-danger">

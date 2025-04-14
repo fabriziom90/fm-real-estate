@@ -44,7 +44,7 @@ const submit = () => {
                     <input
                         type="text"
                         placeholder="Email"
-                        class="input-sm rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="input-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form.email"
                     />
                     <div v-if="form.errors.email" class="text-danger">
@@ -56,7 +56,7 @@ const submit = () => {
                     <input
                         type="password"
                         placeholder="Password"
-                        class="input-sm rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
+                        class="input-lg rounded w-full border-gray-300 shadow-sm focus:border-main-blue focus:ring-main-blue"
                         v-model="form.password"
                     />
                     <div v-if="form.errors.password" class="text-danger">
