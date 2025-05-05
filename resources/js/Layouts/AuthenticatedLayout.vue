@@ -11,7 +11,7 @@ import { Link } from "@inertiajs/vue3";
         <div class="min-h-screen bg-blue-main">
             <!-- Page Content -->
             <div
-                class="w-[100%] md:w-[768px] lg:w-[990px] xl:w-[1250px] mx-auto pt-10"
+                class="w-[100%] md:w-[768px] lg:w-[990px] xl:w-[1450px] mx-auto pt-10"
             >
                 <div class="flex flex-1 gap-5">
                     <div class="w-[120px]">

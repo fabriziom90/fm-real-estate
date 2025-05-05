@@ -1,6 +1,5 @@
 <script setup>
-
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 
 defineProps({
     mustVerifyEmail: {
@@ -21,7 +20,7 @@ const form = useForm({
 
 <template>
     <section>
-        <header>
+        <!-- <header>
             <h2 class="text-lg font-medium text-gray-900">
                 Profile Information
             </h2>
@@ -48,7 +47,7 @@ const form = useForm({
                     autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" /> -->
+                <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
             <div>
@@ -63,7 +62,7 @@ const form = useForm({
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" /> -->
+                <InputError class="mt-2" :message="form.errors.email" /> 
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
@@ -76,7 +75,7 @@ const form = useForm({
                         class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                         Click here to re-send the verification email.
-                    </Link> -->
+                    </Link>
                 </p>
 
                 <div
@@ -102,8 +101,8 @@ const form = useForm({
                     >
                         Saved.
                     </p>
-                </Transition> -->
+                </Transition>
             </div>
-        </form>
+        </form> -->
     </section>
 </template>
