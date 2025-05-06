@@ -1,49 +1,38 @@
-# STEP 1: base image with PHP, Composer, and Node
-FROM node:18 as nodebuilder
+FROM php:8.2-cli
 
-# Install PHP and dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
-    php-cli php-mbstring php-xml php-bcmath php-curl php-zip php-mysql \
-    unzip curl git apache2 libapache2-mod-php php-pdo
+    git unzip curl libzip-dev libpng-dev libonig-dev libxml2-dev libcurl4-openssl-dev \
+    zip libssl-dev pkg-config libmcrypt-dev libreadline-dev \
+    && docker-php-ext-install pdo pdo_mysql zip pcntl
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Install Node.js and npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
+
+# Install Swoole for Octane
+RUN pecl install swoole && docker-php-ext-enable swoole
 
 # Set working directory
 WORKDIR /app
 
-# Copy only package and composer files
-COPY package*.json ./
-COPY composer.* ./
-
-# Install Node dependencies
-RUN npm install
-
-# Install Composer
-RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
-
-# Copy full project and install PHP dependencies
+# Copy everything
 COPY . .
 
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
-RUN npm run build
 
-# Set permissions
-RUN chmod -R 755 storage && chmod -R 755 bootstrap/cache
+# Build frontend assets
+RUN npm install && npm run build
 
-# STEP 2: build final Apache image
-FROM php:8.2-apache
+# Ensure correct permissions
+RUN chmod -R 755 storage bootstrap/cache
 
-# Enable mod_rewrite
-RUN a2enmod rewrite
+# Expose the Octane port
+EXPOSE 8000
 
-# Set working directory
-WORKDIR /var/www/html
-
-# Copy app from previous image
-COPY --from=nodebuilder /app /var/www/html
-
-# Change document root to /public
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
-
-# Expose Railway port
-EXPOSE 8080
-
-CMD ["apache2-foreground"]
+# Start Laravel Octane with Swoole
+CMD ["php", "artisan", "octane:start", "--server=swoole", "--host=0.0.0.0", "--port=8000"]
