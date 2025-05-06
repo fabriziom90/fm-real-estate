@@ -14,6 +14,9 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     && docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath
 
+# Installa Swoole
+RUN curl -sSL https://build.swoole.dev | bash -s -- --php --install-dir=/usr/local/lib/php/extensions/no-debug-non-zts-20220829
+
 # Installa Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -26,6 +29,7 @@ WORKDIR /var/www
 
 # Copia i file
 COPY . .
+
 
 # Installa dipendenze PHP e JS
 RUN composer install --no-dev --optimize-autoloader \
