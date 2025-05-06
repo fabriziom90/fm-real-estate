@@ -1,40 +1,38 @@
-FROM php:8.2-cli
+# Usa un'immagine base PHP con estensioni comuni
+FROM php:8.2-fpm
 
-# Installa estensioni richieste
+# Installa dipendenze di sistema
 RUN apt-get update && apt-get install -y \
-    unzip \
-    git \
+    build-essential \
     curl \
-    libzip-dev \
-    libonig-dev \
-    libxml2-dev \
+    git \
+    unzip \
     zip \
     libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libssl-dev \
-    libcurl4-openssl-dev \
-    pkg-config \
-    libpq-dev \
-    libmcrypt-dev
-
-# Installa estensione swoole
-RUN pecl install swoole \
-    && docker-php-ext-enable swoole
-
-# Installa estensioni PHP comuni
-RUN docker-php-ext-install pdo pdo_mysql zip
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    && docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath
 
 # Installa Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copia file e installa dipendenze
-WORKDIR /app
-COPY . .
-RUN composer install --no-dev --optimize-autoloader
+# Installa Node.js e npm
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
 
-# Espone la porta usata da Octane
+# Imposta la directory di lavoro
+WORKDIR /var/www
+
+# Copia i file
+COPY . .
+
+# Installa dipendenze PHP e JS
+RUN composer install --no-dev --optimize-autoloader \
+    && npm install && npm run build
+
+# Espone la porta (es. Laravel Octane usa 8000 o 8080)
 EXPOSE 8000
 
-# Avvia Octane (Swoole)
-CMD php artisan octane:start --server=swoole --host=0.0.0.0 --port=8000
+# Comando di avvio (modifica in base al server usato: octane, artisan serve, ecc.)
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
