@@ -32,7 +32,7 @@ RUN composer install --no-dev --optimize-autoloader \
     && npm install && npm run build
 
 # Espone la porta (es. Laravel Octane usa 8000 o 8080)
-EXPOSE 8000
+EXPOSE 8080
 
 # Comando di avvio (modifica in base al server usato: octane, artisan serve, ecc.)
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8080"]
