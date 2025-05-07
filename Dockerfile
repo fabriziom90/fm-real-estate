@@ -14,8 +14,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     && docker-php-ext-install pdo_mysql mbstring zip exif pcntl bcmath
 
-# Installa Swoole
-RUN curl -sSL https://build.swoole.dev | bash -s -- --php --install-dir=/usr/local/lib/php/extensions/no-debug-non-zts-20220829
+
 
 # Installa Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -39,4 +38,4 @@ RUN composer install --no-dev --optimize-autoloader \
 EXPOSE 8000
 
 # Comando di avvio (modifica in base al server usato: octane, artisan serve, ecc.)
-CMD ["php", "artisan", "octane:start", "--server=swoole", "--host=0.0.0.0", "--port=8000"]
+CMD ["php", "artisan", "server", "start", "--host=127.0.0.1", "--port=8000"]
