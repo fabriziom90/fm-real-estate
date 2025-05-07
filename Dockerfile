@@ -38,4 +38,4 @@ RUN composer install --no-dev --optimize-autoloader \
 EXPOSE 8000
 
 # Comando di avvio (modifica in base al server usato: octane, artisan serve, ecc.)
-CMD ["php", "artisan", "serve", "--host=127.0.0.1", "--port=8000"]
+CMD ["php", "artisan", "serve", "--host=fm-real-estate-production.up.railway.app", "--port=8000"]
