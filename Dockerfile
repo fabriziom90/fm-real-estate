@@ -37,5 +37,6 @@ RUN composer install --no-dev --optimize-autoloader \
 # Espone la porta (es. Laravel Octane usa 8000 o 8080)
 EXPOSE 8000
 
+RUN php artisan storage:link
 # Comando di avvio (modifica in base al server usato: octane, artisan serve, ecc.)
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=9000"]
